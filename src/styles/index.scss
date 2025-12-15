@@ -1,0 +1,15 @@
+// ============================================================================
+// Main SCSS Entry Point
+// ============================================================================
+// This file exports all variables, mixins and base styles
+// so they are available in all components
+
+// CSS Variables - Loaded GLOBALLY (automatically in all files)
+@forward 'abstract/css-variables';
+
+// Apply reset globally
+@forward 'abstract/reset';
+
+// Export SASS variables and mixins (require @use to use)
+@forward 'abstract/variables';
+@forward 'abstract/mixins';

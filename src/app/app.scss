@@ -1,0 +1,46 @@
+// ============================================================================
+// App Component Styles
+// ============================================================================
+
+@use 'index' as *;
+
+.color-css {
+    background-color: $primary-color;
+    padding: $font-size-4xl;
+    @include focus-ring;
+}
+
+.colors-css {
+    &__item {
+        padding: $font-size-4xl;
+        background-color: $accent-color;
+        @include flex-center;
+    }
+}
+
+.example-card-css {
+    background-color: var(--bg-primary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: var(--border-width) solid var(--border-color);
+
+    h1 {
+        font-family: var(--font-family-heading);
+        font-size: var(--font-size-3xl);
+        color: var(--text-primary);
+        font-weight: var(--font-weight-bold);
+    }
+
+    p {
+        font-size: var(--font-size-base);
+        color: var(--text-secondary);
+        line-height: var(--line-height-normal);
+    }
+}
+
+.example-sass {
+    color: $primary-color;
+    padding: $spacing-md;
+    @include flex-center;
+}
