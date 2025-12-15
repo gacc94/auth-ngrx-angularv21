@@ -1,0 +1,30 @@
+@use 'index.scss' as *;
+
+.sign-in {
+    @include flex-center;
+    min-height: 100dvh;
+    width: 100%;
+
+    &__section {
+        border: 1px solid red;
+        padding: $spacing-md;
+        border-radius: 1.25rem;
+        max-width: 25rem;
+        width: 100%;
+        display: grid;
+        gap: 1rem;
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    &__button-wrapper {
+        display: flex;
+        justify-content: center;
+
+        & button[matButton='filled'] {
+            width: 100%;
+        }
+    }
+}

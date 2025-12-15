@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "ngm-dev-blocks": {
+            "command": "npx",
+            "args": ["-y", "@ngm-dev/cli", "mcp", "/Users/gustavocaqui/Development/gacc/demos/angular/auth-21"],
+            "type": "stdio"
+        }
+    },
+    "inputs": []
+}

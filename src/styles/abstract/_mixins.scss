@@ -1,17 +1,17 @@
 // ============================================================================
-// Mixins SASS
+// SASS Mixins
 // ============================================================================
 
 @use 'variables' as *;
 
-// Mixin para centrar elementos con flexbox
+// Mixin for centering elements with flexbox
 @mixin flex-center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-// Mixin para responsive breakpoints
+// Mixin for responsive breakpoints
 @mixin respond-to($breakpoint) {
     @if $breakpoint == 'sm' {
         @media (min-width: $breakpoint-sm) {
@@ -36,14 +36,14 @@
     }
 }
 
-// Mixin para truncar texto
+// Mixin for truncating text
 @mixin truncate {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-// Mixin para truncar texto en múltiples líneas
+// Mixin for multi-line text truncation
 @mixin line-clamp($lines: 2) {
     display: -webkit-box;
     -webkit-line-clamp: $lines;
@@ -51,7 +51,7 @@
     overflow: hidden;
 }
 
-// Mixin para hover states
+// Mixin for hover states
 @mixin hover-lift {
     transition:
         transform $transition-base,
@@ -63,7 +63,7 @@
     }
 }
 
-// Mixin para focus visible states
+// Mixin for focus visible states
 @mixin focus-ring($color: $primary-color) {
     outline: 2px solid transparent;
     outline-offset: 2px;
@@ -74,18 +74,18 @@
     }
 }
 
-// Mixin para glassmorphism effect
+// Mixin for glassmorphism effect
 @mixin glass-effect($blur: 10px, $opacity: 0.1) {
     backdrop-filter: blur($blur);
     background-color: rgba(255, 255, 255, $opacity);
 }
 
-// Mixin para gradientes
+// Mixin for gradients
 @mixin gradient-primary {
     background: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
 }
 
-// Mixin para aspect ratio
+// Mixin for aspect ratio
 @mixin aspect-ratio($width, $height) {
     aspect-ratio: #{$width} / #{$height};
 }

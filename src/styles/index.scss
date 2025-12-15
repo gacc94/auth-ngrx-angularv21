@@ -13,3 +13,5 @@
 // Export SASS variables and mixins (require @use to use)
 @forward 'abstract/variables';
 @forward 'abstract/mixins';
+
+@forward 'themes/theme-colors';
