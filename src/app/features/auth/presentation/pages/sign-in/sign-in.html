@@ -5,21 +5,23 @@
             <mat-form-field class="form-field form-field--outline" appearance="outline">
                 <mat-label class="form-field__label">Outline form field</mat-label>
                 <input class="form-field__input" matInput placeholder="Placeholder" />
-                <mat-icon class="form-field__icon" matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint class="form-field__hint">Hint</mat-hint>
             </mat-form-field>
         </div>
         <div class="sign-in__form-field-wrapper">
             <mat-form-field class="form-field form-field--outline" appearance="outline">
                 <mat-label class="form-field__label">Outline form field</mat-label>
                 <input class="form-field__input" matInput placeholder="Placeholder" />
-                <mat-icon class="form-field__icon" matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint class="form-field__hint">Hint</mat-hint>
             </mat-form-field>
         </div>
 
         <div class="sign-in__button-wrapper">
-            <button matButton="filled" (click)="appStore?.increment()">Add +</button>
+            <button matButton="filled">Sign In</button>
+        </div>
+        <div class="sign-in__button-wrapper">
+            <button matButton="outlined" (click)="signInGoogle()">
+                <mat-icon matSuffix color="primary">arrow_forward</mat-icon>
+                Sign In with Google
+            </button>
         </div>
     </section>
 </div>

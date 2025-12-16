@@ -1,12 +1,8 @@
-import { UserState } from '../states/user.state';
+import { User as FirebaseUser } from '@angular/fire/auth';
+import { User } from '../../domain/entities/user.entity';
 
 export class UserMapper {
-    static toUserState(user: any): UserState {
-        return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-        } satisfies UserState;
+    static toEntity(user: FirebaseUser): User {
+        return new User(user.uid, user.displayName ?? '', user.email ?? '', 'user');
     }
 }

@@ -3,8 +3,8 @@
 // components according to the Material 3 design spec.
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
-@use 'styles/themes/theme-colors' as themeColors; //TODO: optional as *;
+@use "@angular/material" as mat;
+@use "styles/themes/theme-colors" as themeColors; //TODO: optional as *;
 
 // Prebuilt Color Palettes:
 // $red-palette
@@ -30,13 +30,12 @@ html {
                 tertiary: mat.$blue-palette,
             ),
             typography: (
-                plain-family: Poppins,
-                brand-family: 'Open Sans',
+                plain-family: "Poppins",
                 bold-weight: 900,
                 medium-weight: 500,
                 regular-weight: 400,
             ),
-            density: -1,
+            density: 0,
         )
     );
 }
@@ -72,5 +71,5 @@ body {
 }
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }

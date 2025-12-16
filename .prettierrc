@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json.schemastore.org/prettierrc",
+    "printWidth": 140,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "quoteProps": "as-needed",
+    "jsxSingleQuote": false,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "requirePragma": false,
+    "insertPragma": false,
+    "proseWrap": "preserve",
+    "htmlWhitespaceSensitivity": "css",
+    "vueIndentScriptAndStyle": false,
+    "endOfLine": "lf",
+    "embeddedLanguageFormatting": "auto",
+    "singleAttributePerLine": false,
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "parser": "angular",
+                "printWidth": 140,
+                "htmlWhitespaceSensitivity": "ignore",
+                "bracketSameLine": true
+            }
+        },
+        {
+            "files": ["*.component.html", "*.template.html"],
+            "options": {
+                "parser": "angular",
+                "printWidth": 140
+            }
+        },
+        {
+            "files": ["*.css", "*.scss"],
+            "options": {
+                "printWidth": 120,
+                "singleQuote": false,
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": "*.json",
+            "options": {
+                "printWidth": 120,
+                "tabWidth": 4,
+                "parser": "json"
+            }
+        },
+        {
+            "files": ["*.yml", "*.yaml"],
+            "options": {
+                "tabWidth": 4,
+                "singleQuote": false
+            }
+        },
+        {
+            "files": "*.md",
+            "options": {
+                "printWidth": 120,
+                "proseWrap": "preserve",
+                "tabWidth": 4
+            }
+        },
+        {
+            "files": ["package.json", "bun.lock"],
+            "options": {
+                "printWidth": 120,
+                "tabWidth": 4
+            }
+        }
+    ]
+}

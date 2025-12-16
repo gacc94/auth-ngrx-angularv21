@@ -2,13 +2,12 @@ import { Routes } from '@angular/router';
 
 const routes: Routes = [
     {
-        path: 'sign-in',
-        loadComponent: () => import('./presentation/pages/sign-in/sign-in'),
-        providers: [],
+        path: '',
+        loadComponent: () => import('./presentation/pages/layout/dashboard'),
     },
     {
         path: '**',
-        redirectTo: 'sign-in',
+        redirectTo: '',
         pathMatch: 'full',
     },
 ];

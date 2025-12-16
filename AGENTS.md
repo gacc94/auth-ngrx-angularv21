@@ -1,3 +1,5 @@
+# Angular Agent
+
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
 ## TypeScript Best Practices
@@ -14,7 +16,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Implement lazy loading for feature routes
 - Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
 - Use `NgOptimizedImage` for all static images.
-    - `NgOptimizedImage` does not work for inline base64 images.
+- `NgOptimizedImage` does not work for inline base64 images.
 
 ## Accessibility Requirements
 
@@ -45,7 +47,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Keep templates simple and avoid complex logic
 - Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
 - Use the async pipe to handle observables
-- Do not assume globals like (`new Date()`) are available.
+- Do not assume globals like `new Date()` are available.
 - Do not write arrow functions in templates (they are not supported).
 
 ## Services

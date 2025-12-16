@@ -6,8 +6,12 @@ export const routes: Routes = [
         loadChildren: () => import('./features/auth/auth.routes'),
     },
     {
+        path: 'dashboard',
+        loadChildren: () => import('./features/dashboard/dashboard.routes'),
+    },
+    {
         path: '**',
-        redirectTo: 'auth/sign-in',
+        redirectTo: 'auth',
         pathMatch: 'full',
     },
 ];
