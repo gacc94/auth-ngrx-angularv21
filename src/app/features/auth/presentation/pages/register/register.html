@@ -1,0 +1,96 @@
+<div class="register">
+    <mat-card class="register__card">
+        <mat-card-header class="register__header">
+            <mat-card-title>Create account</mat-card-title>
+            <mat-card-subtitle>Sign up to get started</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="register__content">
+            @if (authStore.hasError()) {
+                <mat-error class="register__error">
+                    {{ authStore.error() }}
+                </mat-error>
+            }
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__form">
+                <mat-form-field appearance="outline" class="register__field">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" placeholder="Your full name" autocomplete="name" />
+                    <mat-icon matSuffix>person</mat-icon>
+                    @if (registerForm.get('name')?.touched && registerForm.get('name')?.invalid) {
+                        <mat-error>{{ getNameError() }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="register__field">
+                    <mat-label>Email address</mat-label>
+                    <input matInput type="email" formControlName="email" placeholder="email@example.com" autocomplete="email" />
+                    <mat-icon matSuffix>email</mat-icon>
+                    @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+                        <mat-error>{{ getEmailError() }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="register__field">
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        [type]="hidePassword ? 'password' : 'text'"
+                        formControlName="password"
+                        placeholder="Minimum 6 characters"
+                        autocomplete="new-password" />
+                    <button
+                        mat-icon-button
+                        matSuffix
+                        type="button"
+                        (click)="hidePassword = !hidePassword"
+                        [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'">
+                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+                        <mat-error>{{ getPasswordError() }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="register__field">
+                    <mat-label>Confirm password</mat-label>
+                    <input
+                        matInput
+                        [type]="hideConfirmPassword ? 'password' : 'text'"
+                        formControlName="confirmPassword"
+                        placeholder="Repeat your password"
+                        autocomplete="new-password" />
+                    <button
+                        mat-icon-button
+                        matSuffix
+                        type="button"
+                        (click)="hideConfirmPassword = !hideConfirmPassword"
+                        [attr.aria-label]="hideConfirmPassword ? 'Show password' : 'Hide password'">
+                        <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    @if (registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid) {
+                        <mat-error>{{ getConfirmPasswordError() }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <button
+                    matButton="filled"
+                    color="primary"
+                    type="submit"
+                    class="register__submit"
+                    [disabled]="authStore.status() === 'loading'">
+                    @if (authStore.status() === 'loading') {
+                        <mat-spinner diameter="20"></mat-spinner>
+                    } @else {
+                        Create account
+                    }
+                </button>
+            </form>
+        </mat-card-content>
+
+        <mat-card-actions class="register__actions">
+            <span class="register__hint">Already have an account?</span>
+            <a mat-button color="primary" routerLink="/auth/sign-in">Sign in</a>
+        </mat-card-actions>
+    </mat-card>
+</div>

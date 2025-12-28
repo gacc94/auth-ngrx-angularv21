@@ -1,27 +1,70 @@
 <div class="sign-in">
-    <section class="sign-in__section">
-        <h2 class="sign-in__title">Sign In</h2>
-        <div class="sign-in__form-field-wrapper">
-            <mat-form-field class="form-field form-field--outline" appearance="outline">
-                <mat-label class="form-field__label">Outline form field</mat-label>
-                <input class="form-field__input" matInput placeholder="Placeholder" />
-            </mat-form-field>
-        </div>
-        <div class="sign-in__form-field-wrapper">
-            <mat-form-field class="form-field form-field--outline" appearance="outline">
-                <mat-label class="form-field__label">Outline form field</mat-label>
-                <input class="form-field__input" matInput placeholder="Placeholder" />
-            </mat-form-field>
-        </div>
+    <mat-card class="sign-in__card">
+        <mat-card-header class="sign-in__header">
+            <mat-card-title>Welcome</mat-card-title>
+            <mat-card-subtitle>Sign in to continue</mat-card-subtitle>
+        </mat-card-header>
 
-        <div class="sign-in__button-wrapper">
-            <button matButton="filled">Sign In</button>
-        </div>
-        <div class="sign-in__button-wrapper">
-            <button matButton="outlined" (click)="signInGoogle()">
-                <mat-icon matSuffix color="primary">arrow_forward</mat-icon>
-                Sign In with Google
+        <mat-card-content class="sign-in__content">
+            @if (false) {
+                <mat-error class="sign-in__error">
+                    {{ false }}
+                </mat-error>
+            }
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="sign-in__form">
+                <mat-form-field appearance="outline" class="sign-in__field">
+                    <mat-label>Email address</mat-label>
+                    <input matInput type="email" formControlName="email" placeholder="email@example.com" autocomplete="email" />
+                    <mat-icon matSuffix>email</mat-icon>
+                    @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+                        <mat-error>{{ getEmailError() }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="sign-in__field">
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        [type]="hidePassword() ? 'password' : 'text'"
+                        formControlName="password"
+                        placeholder="Your password"
+                        autocomplete="current-password" />
+                    <button
+                        mat-icon-button
+                        matSuffix
+                        type="button"
+                        (click)="hidePassword.set(!hidePassword())"
+                        [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'">
+                        <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                    @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+                        <mat-error>{{ getPasswordError() }}</mat-error>
+                    }
+                </mat-form-field>
+
+                <button matButton="filled" color="primary" type="submit" class="sign-in__submit" [disabled]="loginForm.invalid">
+                    @if (false) {
+                        <mat-spinner diameter="20" />
+                    } @else {
+                        Sign in
+                    }
+                </button>
+            </form>
+
+            <div class="sign-in__divider">
+                <span>or continue with</span>
+            </div>
+
+            <button matButton="tonal" type="button" class="sign-in__google" (click)="signInWithGoogle()">
+                <mat-icon svgIcon="google" />
+                Sign in with Google
             </button>
-        </div>
-    </section>
+        </mat-card-content>
+
+        <mat-card-actions class="sign-in__actions">
+            <span class="sign-in__hint">Don't have an account?</span>
+            <a mat-button color="primary" routerLink="/auth/register">Sign up</a>
+        </mat-card-actions>
+    </mat-card>
 </div>

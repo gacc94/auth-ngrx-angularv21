@@ -1,10 +1,16 @@
 import { Routes } from '@angular/router';
+import { publicGuard } from '@core/guards/public.guard';
 
 const routes: Routes = [
     {
         path: 'sign-in',
         loadComponent: () => import('./presentation/pages/sign-in/sign-in'),
-        providers: [],
+        canActivate: [publicGuard],
+    },
+    {
+        path: 'register',
+        loadComponent: () => import('./presentation/pages/register/register'),
+        canActivate: [publicGuard],
     },
     {
         path: '**',

@@ -1,4 +1,4 @@
-.sign-in {
+.register {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,47 +71,6 @@
         mat-spinner {
             margin: auto;
         }
-    }
-
-    &__divider {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-
-        &::before,
-        &::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background-color: #e0e0e0;
-        }
-
-        span {
-            padding: 0 1rem;
-            color: #999;
-            font-size: 0.875rem;
-        }
-    }
-
-    &__google {
-        width: 100%;
-        height: 48px;
-        font-size: 0.9375rem;
-        font-weight: 500;
-        border-radius: 24px;
-        text-transform: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-
-        &:disabled {
-            opacity: 0.7;
-        }
-    }
-
-    &__google-icon {
-        flex-shrink: 0;
     }
 
     &__actions {

@@ -9,10 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 @NgModule({
     exports: [
         MatButtonModule,
@@ -29,6 +32,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         MatGridListModule,
         MatSlideToggleModule,
         MatTableModule,
+        MatProgressSpinnerModule,
+        MatTooltipModule,
     ],
 })
 export class MaterialModule {}
