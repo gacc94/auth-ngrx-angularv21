@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthStore } from '@app/features/auth/application/stores/auth.store';
 import { MaterialModule } from '@shared/material.module';
 
 @Component({
@@ -10,6 +11,7 @@ import { MaterialModule } from '@shared/material.module';
 })
 export default class SignIn {
     readonly #router = inject(Router);
+    protected readonly authStore = inject(AuthStore);
 
     signInGoogle() {
         this.#router.navigate(['dashboard']);

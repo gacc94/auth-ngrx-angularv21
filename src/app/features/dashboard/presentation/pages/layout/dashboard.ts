@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MaterialModule } from '@app/shared/material.module';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -12,15 +13,16 @@ import { map, shareReplay } from 'rxjs/operators';
     imports: [AsyncPipe, MaterialModule],
 })
 export default class Dashboard {
-    private breakpointObserver = inject(BreakpointObserver);
+    readonly #breakpointObserver = inject(BreakpointObserver);
+    readonly #router = inject(Router);
 
-    isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    isHandset$: Observable<boolean> = this.#breakpointObserver.observe(Breakpoints.Handset).pipe(
         map((result) => result.matches),
         shareReplay(),
     );
 
     /** Based on the screen size, switch from standard to one column per row */
-    cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    cards = this.#breakpointObserver.observe(Breakpoints.Handset).pipe(
         map(({ matches }) => {
             if (matches) {
                 return [
@@ -39,4 +41,8 @@ export default class Dashboard {
             ];
         }),
     );
+
+    protected onLogout(): void {
+        this.#router.navigateByUrl('/sign-in');
+    }
 }
