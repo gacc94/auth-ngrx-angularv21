@@ -27,7 +27,7 @@ export class SignInEffects {
         return rxMethod<void>(
             pipe(
                 tap(() => {
-                    patchState(store, { status: 'loading' });
+                    patchState(store, { status: 'logging-in' });
                 }),
                 switchMap(() => {
                     return from(this.#signInWithGoogleUseCase.execute()).pipe(
@@ -61,7 +61,7 @@ export class SignInEffects {
         return rxMethod<Credentials>(
             pipe(
                 tap(() => {
-                    patchState(store, { status: 'loading', error: null });
+                    patchState(store, { status: 'logging-in', error: null });
                 }),
                 switchMap((credential) => {
                     return from(this.#signInWithEmailUseCase.execute(credential)).pipe(

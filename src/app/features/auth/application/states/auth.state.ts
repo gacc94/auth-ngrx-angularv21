@@ -5,13 +5,20 @@ import { User } from '../../domain/entities/user.entity';
 /**
  * Represents the possible states of the authentication process.
  *
- * - `loading`: An authentication request is currently in progress.
+ * - `idle`: The initial state before any authentication action has been initiated.
+ * - `checking`: Verifying session at startup (Splash screen)
+ * - `logging-in`: Login request in progress (Spinner on button)
  * - `authenticated`: The user has been successfully authenticated.
  * - `unauthenticated`: No user is currently logged in.
  * - `error`: An error occurred during the last authentication attempt.
- * - `idle`: The initial state before any authentication action has been initiated.
  */
-export type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated' | 'error' | 'idle';
+export type AuthStatus =
+    | 'idle' // Nothing has happened
+    | 'checking' // Verifying session at startup (Splash screen)
+    | 'logging-in' // Login request in progress (Spinner on button)
+    | 'authenticated' // User is authenticated
+    | 'unauthenticated' // User is not authenticated
+    | 'error'; // An error occurred
 
 /**
  * Represents the authentication state of the application.

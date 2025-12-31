@@ -1,0 +1,97 @@
+@use "abstract/variables" as v;
+
+// =============================================================================
+// Inactivity Modal Component
+// =============================================================================
+// BEM naming convention: .inactivity-modal
+
+.inactivity-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: v.$spacing-xl v.$spacing-2xl;
+    text-align: center;
+    min-width: 320px;
+    max-width: 400px;
+
+    // Icon container
+    &__icon {
+        width: 64px;
+        height: 64px;
+        border-radius: v.$radius-full;
+        background: linear-gradient(135deg, #e5f2ff 0%, #c9e6ff 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: v.$spacing-lg;
+
+        mat-icon {
+            font-size: 32px;
+            width: 32px;
+            height: 32px;
+            color: #2f6384;
+        }
+    }
+
+    // Title
+    &__title {
+        // font-family: v.$font-family-heading;
+        font-size: v.$font-size-xl;
+        font-weight: 600;
+        color: v.$text-primary;
+        margin: 0 0 v.$spacing-md;
+    }
+
+    // Description text
+    &__description {
+        // font-family: v.$font-family-base;
+        font-size: v.$font-size-sm;
+        color: v.$text-secondary;
+        margin: 0 0 v.$spacing-lg;
+        line-height: 1.5;
+    }
+
+    // Countdown timer
+    &__countdown {
+        // font-family: v.$font-family-mono;
+        font-size: v.$font-size-3xl;
+        font-weight: 600;
+        color: #2f6384;
+        padding: v.$spacing-md v.$spacing-xl;
+        background-color: #f6faff;
+        border: 2px solid #c9e6ff;
+        border-radius: v.$radius-lg;
+        margin-bottom: v.$spacing-xl;
+        min-width: 120px;
+    }
+
+    // Action buttons container
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: v.$spacing-sm;
+        width: 100%;
+
+        button {
+            width: 100%;
+            border-radius: v.$radius-full;
+            padding: v.$spacing-sm v.$spacing-lg;
+            font-weight: 500;
+        }
+    }
+}
+
+// Countdown animation pulse
+@keyframes countdown-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.inactivity-modal__countdown {
+    animation: countdown-pulse 1s ease-in-out infinite;
+}

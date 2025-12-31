@@ -3,6 +3,7 @@ import {
     Auth,
     authState,
     createUserWithEmailAndPassword,
+    getIdTokenResult,
     GoogleAuthProvider,
     signInWithEmailAndPassword,
     signInWithPopup,
@@ -133,20 +134,14 @@ export class FirebaseAuthRepository implements AuthRepositoryPort {
      * Builds an AuthResult from a Firebase User.
      */
     async #buildAuthResult(firebaseUser: import('@angular/fire/auth').User): Promise<ResultType<AuthResult, AuthException>> {
-        const tokenResult = await Result.fromPromise(firebaseUser.getIdTokenResult(), mapFirebaseAuthError);
+        const tokenResult = await Result.fromPromise(getIdTokenResult(firebaseUser), mapFirebaseAuthError);
 
         if (Result.isFailure(tokenResult)) {
             return tokenResult;
         }
 
-        const accessTokenResult = await Result.fromPromise(firebaseUser.getIdToken(), mapFirebaseAuthError);
-
-        if (Result.isFailure(accessTokenResult)) {
-            return accessTokenResult;
-        }
-
         const user = UserMapper.toEntity(firebaseUser);
-        const token = TokenMapper.toEntity(tokenResult.value, accessTokenResult.value);
+        const token = TokenMapper.toEntity(tokenResult.value);
 
         return Result.success({ user, token });
     }

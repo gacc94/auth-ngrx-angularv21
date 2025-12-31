@@ -24,7 +24,7 @@ export class SignOutEffects {
             pipe(
                 tap(() => {
                     patchState(store, {
-                        status: 'loading',
+                        status: 'logging-in',
                     });
                 }),
 

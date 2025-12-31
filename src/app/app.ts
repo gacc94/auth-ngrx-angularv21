@@ -1,9 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthStore } from './features/auth/application/stores/auth.store';
+import { GlobalLoading } from './shared/components/global-loading/global-loading';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet],
-    template: `<router-outlet />`,
+    imports: [RouterOutlet, GlobalLoading],
+    template: `
+        <app-global-loading [isLoading]="authStore.isInitializing()" />
+        <router-outlet />
+    `,
 })
-export class App {}
+export class App {
+    protected readonly authStore: InstanceType<typeof AuthStore> = inject(AuthStore);
+}

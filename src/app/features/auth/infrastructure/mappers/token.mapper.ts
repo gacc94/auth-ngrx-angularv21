@@ -8,10 +8,10 @@ export class TokenMapper {
     /**
      * Converts a Firebase IdTokenResult to a domain Token entity.
      * @param idTokenResult - The Firebase ID token result.
-     * @param accessToken - The access token string.
      * @returns A new Token domain entity.
      */
-    static toEntity(idTokenResult: IdTokenResult, accessToken: string): Token {
+    static toEntity(idTokenResult: IdTokenResult): Token {
+        const accessToken = idTokenResult.token;
         const expiresAt = new Date(idTokenResult.expirationTime);
         const issuedAt = new Date(idTokenResult.issuedAtTime);
 
@@ -26,7 +26,6 @@ export class TokenMapper {
 
     /**
      * Creates a Token entity from an access token with a default expiration.
-     * Used when IdTokenResult is not available.
      * @param accessToken - The access token string.
      * @param expiresInMs - Expiration time in milliseconds from now (default 1 hour).
      * @returns A new Token domain entity.

@@ -1,0 +1,96 @@
+@use "../../../../styles/abstract/variables" as v;
+
+// =============================================================================
+// Global Loading Component
+// =============================================================================
+// BEM naming convention: .global-loading
+
+.global-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f6faff 0%, #e5f2ff 100%);
+    transition: opacity v.$transition-base;
+
+    // Fade-out animation when loading completes
+    &--hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    // Logo and branding
+    &__brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: v.$spacing-lg;
+        margin-bottom: v.$spacing-2xl;
+    }
+
+    &__logo {
+        width: 80px;
+        height: 80px;
+        border-radius: v.$radius-xl;
+        background: linear-gradient(135deg, #4a7c9e 0%, #2f6384 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: v.$shadow-lg;
+
+        // Icon inside logo
+        mat-icon {
+            font-size: 40px;
+            width: 40px;
+            height: 40px;
+            color: #ffffff;
+        }
+    }
+
+    &__title {
+        font-family: v.$font-family-heading;
+        font-size: v.$font-size-2xl;
+        font-weight: 600;
+        color: v.$text-primary;
+        margin: 0;
+    }
+
+    // Spinner container
+    &__spinner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: v.$spacing-md;
+    }
+
+    &__text {
+        font-family: v.$font-family-base;
+        font-size: v.$font-size-base;
+        color: v.$text-secondary;
+        margin: 0;
+    }
+
+    // Progress bar container
+    &__progress {
+        width: 200px;
+        margin-top: v.$spacing-sm;
+    }
+}
+
+// Animation for logo pulse
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.global-loading__logo {
+    animation: pulse 2s ease-in-out infinite;
+}

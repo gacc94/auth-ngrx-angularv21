@@ -4,7 +4,7 @@ import { StateStore } from '@app/shared/utils/types/state-store.type';
 import { tapResponse } from '@ngrx/operators';
 import { patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
+import { debounce, pipe, switchMap, tap, timer } from 'rxjs';
 import { OBSERVE_AUTH_STATE_USECASE } from '../../infrastructure/providers';
 import { AuthState, initialAuthState } from '../states/auth.state';
 
@@ -18,9 +18,10 @@ export class ObserveAuthStateEffects {
                 tap(() =>
                     patchState(store, {
                         ...initialAuthState,
-                        status: 'loading',
+                        status: 'checking',
                     }),
                 ),
+                // debounce(() => timer(100)),
                 switchMap(() => {
                     return this.#observeAuthStateUseCase.execute().pipe(
                         tapResponse({

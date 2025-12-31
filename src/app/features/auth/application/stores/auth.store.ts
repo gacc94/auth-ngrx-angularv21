@@ -39,6 +39,12 @@ export const AuthStore = signalStore(
          * The current authentication token.
          */
         currentToken: computed(() => store.token()),
+
+        /**
+         * Whether the authentication state is being initialized.
+         * True when the app starts ('idle') or during Firebase SDK evaluation ('loading').
+         */
+        isInitializing: computed(() => store.status() === 'idle' || store.status() === 'checking'),
     })),
 
     withMethods((store) => ({
@@ -73,8 +79,15 @@ export const AuthStore = signalStore(
 
             effect(() => {
                 const state = getState(store);
-                console.log('Effects:', { status });
-                const route = state.status === 'authenticated' ? '/dashboard' : '/auth';
+                const { status } = state;
+
+                // Only navigate after auth state is resolved (not during initialization)
+                if (status === 'idle' || status === 'checking') {
+                    return;
+                }
+
+                console.log('Effect - navigating:', { status });
+                const route = status === 'authenticated' ? '/dashboard' : '/auth';
                 store._router.navigate([route]);
             });
         },
