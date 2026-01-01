@@ -44,7 +44,7 @@
                 </mat-form-field>
 
                 <button matButton="filled" color="primary" type="submit" class="sign-in__submit" [disabled]="loginForm.invalid">
-                    @if (false) {
+                    @if ($isLoading()) {
                         <mat-spinner diameter="20" />
                     } @else {
                         Sign in
@@ -57,8 +57,14 @@
             </div>
 
             <button matButton="tonal" type="button" class="sign-in__google" (click)="signInWithGoogle()">
-                <mat-icon svgIcon="google" />
-                Sign in with Google
+                @if ($isLoading()) {
+                    <mat-spinner diameter="20" />
+                } @else {
+                    <ng-container>
+                        <mat-icon svgIcon="google" />
+                        Sign in with Google
+                    </ng-container>
+                }
             </button>
         </mat-card-content>
 

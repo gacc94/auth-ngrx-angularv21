@@ -1,5 +1,10 @@
 import { InjectionToken } from '@angular/core';
-import type { InactivityState } from '../../domain/models/inactivity-state.model';
+
+export interface InactivityState {
+    isModalVisible: boolean;
+    countdownSeconds: number;
+    isTracking: boolean;
+}
 
 /**
  * The initial state for the inactivity store.

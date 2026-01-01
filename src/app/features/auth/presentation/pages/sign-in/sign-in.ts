@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@app/features/auth/application/stores/auth.store';
@@ -18,6 +18,8 @@ import { MaterialModule } from '@app/shared/material/material.module';
 export default class SignIn {
     readonly #fb = inject(FormBuilder);
     protected readonly authStore = inject(AuthStore);
+
+    protected readonly $isLoading = linkedSignal(() => this.authStore.status() === 'logging-in');
 
     /** Login form with email and password. */
     protected readonly loginForm = this.#fb.group({

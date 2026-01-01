@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MaterialModule } from '@app/shared/material/material.module';
 import { AuthStore } from '@features/auth/application/stores/auth.store';
 
@@ -49,11 +49,12 @@ export default class Register {
         }
 
         const { name, email } = this.registerForm.getRawValue();
-        // this.authStore.register({
-        //     name: name ?? '',
-        //     email: email ?? '',
-        //     password: password ?? '',
-        // });
+
+        this.authStore.signUp({
+            name: name ?? '',
+            email: email ?? '',
+            password: password ?? '',
+        });
     }
 
     /**

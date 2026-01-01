@@ -1,4 +1,3 @@
-import { inject } from '@angular/core';
 import {
     Auth,
     authState,
@@ -25,14 +24,14 @@ import { UserMapper } from '../mappers/user.mapper';
  * Handles all authentication operations using Firebase Auth.
  */
 export class FirebaseAuthRepository implements AuthRepositoryPort {
-    readonly #auth = inject(Auth);
+    constructor(private readonly _auth: Auth) {}
 
     /**
      * Authenticates a user with email and password.
      */
     async signInWithEmail(credentials: Credentials): Promise<ResultType<AuthResult, AuthException>> {
         const result = await Result.fromPromise(
-            signInWithEmailAndPassword(this.#auth, credentials.email, credentials.password),
+            signInWithEmailAndPassword(this._auth, credentials.email, credentials.password),
             mapFirebaseAuthError,
         );
 
@@ -47,7 +46,6 @@ export class FirebaseAuthRepository implements AuthRepositoryPort {
      * Authenticates a user with Google OAuth.
      */
     async signInWithGoogle(): Promise<ResultType<AuthResult, AuthException>> {
-        console.log('signInWithGoogle');
         const provider = new GoogleAuthProvider();
         provider.addScope('profile');
         provider.addScope('email');
@@ -56,7 +54,7 @@ export class FirebaseAuthRepository implements AuthRepositoryPort {
             prompt: 'select_account',
         });
 
-        const result = await Result.fromPromise(signInWithPopup(this.#auth, provider), mapFirebaseAuthError);
+        const result = await Result.fromPromise(signInWithPopup(this._auth, provider), mapFirebaseAuthError);
 
         if (Result.isFailure(result)) {
             return result;
@@ -70,7 +68,7 @@ export class FirebaseAuthRepository implements AuthRepositoryPort {
      */
     async signUp(credentials: RegisterCredentials): Promise<ResultType<AuthResult, AuthException>> {
         const createResult = await Result.fromPromise(
-            createUserWithEmailAndPassword(this.#auth, credentials.email, credentials.password),
+            createUserWithEmailAndPassword(this._auth, credentials.email, credentials.password),
             mapFirebaseAuthError,
         );
 
@@ -97,14 +95,14 @@ export class FirebaseAuthRepository implements AuthRepositoryPort {
      * Signs out the current user.
      */
     async signOut(): Promise<ResultType<void, AuthException>> {
-        return Result.fromPromise(signOut(this.#auth), mapFirebaseAuthError);
+        return Result.fromPromise(signOut(this._auth), mapFirebaseAuthError);
     }
 
     /**
      * Gets the currently authenticated user.
      */
     async getCurrentUser(): Promise<ResultType<AuthResult | null, AuthException>> {
-        const firebaseUser = await firstValueFrom(authState(this.#auth));
+        const firebaseUser = await firstValueFrom(authState(this._auth));
 
         if (!firebaseUser) {
             return Result.success(null);
@@ -119,7 +117,7 @@ export class FirebaseAuthRepository implements AuthRepositoryPort {
      * @returns An Observable that emits AuthResult when authenticated or null when not.
      */
     observeAuthState(): Observable<ResultType<AuthResult | null, AuthException>> {
-        return authState(this.#auth).pipe(
+        return authState(this._auth).pipe(
             switchMap((firebaseUser) => {
                 if (!firebaseUser) {
                     return of(Result.success(null) as ResultType<AuthResult | null, AuthException>);

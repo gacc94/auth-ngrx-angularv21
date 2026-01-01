@@ -78,8 +78,8 @@
                     color="primary"
                     type="submit"
                     class="register__submit"
-                    [disabled]="authStore.status() === 'loading'">
-                    @if (authStore.status() === 'loading') {
+                    [disabled]="authStore.status() === 'logging-in'">
+                    @if (authStore.status() === 'logging-in') {
                         <mat-spinner diameter="20"></mat-spinner>
                     } @else {
                         Create account

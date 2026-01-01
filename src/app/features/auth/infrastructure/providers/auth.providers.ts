@@ -1,22 +1,15 @@
-import { InjectionToken, Provider } from '@angular/core';
+import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import {
-    GetCurrentUserUseCase,
     ObserveAuthStateUseCase,
     SignInWithEmailUseCase,
     SignInWithGoogleUseCase,
     SignOutUseCase,
     SignUpUseCase,
-} from '../../application/usecases';
-import type {
-    GetCurrentUserPort,
-    ObserveAuthStatePort,
-    SignInWithEmailPort,
-    SignInWithGooglePort,
-    SignOutPort,
-    SignUpPort,
-} from '../../domain/ports/in';
-import type { AuthRepositoryPort } from '../../domain/ports/out/auth-repository.out';
-import { FirebaseAuthRepository } from '../repositories/firebase-auth.repository';
+} from '@auth/application/usecases';
+import type { ObserveAuthStatePort, SignInWithEmailPort, SignInWithGooglePort, SignOutPort, SignUpPort } from '@auth/domain/ports/in';
+import type { AuthRepositoryPort } from '@auth/domain/ports/out/auth-repository.out';
+import { FirebaseAuthRepository } from '@auth/infrastructure/repositories/firebase-auth.repository';
 
 // ============================================
 // Output Port Token (Repository)
@@ -26,10 +19,7 @@ import { FirebaseAuthRepository } from '../repositories/firebase-auth.repository
  * InjectionToken for the AuthRepositoryPort.
  * Provides the FirebaseAuthRepository implementation.
  */
-export const AUTH_REPOSITORY_PORT = new InjectionToken<AuthRepositoryPort>('AUTH_REPOSITORY_PORT', {
-    providedIn: 'root',
-    factory: () => new FirebaseAuthRepository(),
-});
+export const AUTH_REPOSITORY = new InjectionToken<AuthRepositoryPort>('AUTH_REPOSITORY');
 
 // ============================================
 // Input Port Tokens (Use Cases)
@@ -38,59 +28,63 @@ export const AUTH_REPOSITORY_PORT = new InjectionToken<AuthRepositoryPort>('AUTH
 /**
  * InjectionToken for the SignInWithEmailPort use case.
  */
-export const SIGN_IN_WITH_EMAIL_USECASE = new InjectionToken<SignInWithEmailPort>('SIGN_IN_WITH_EMAIL_USECASE', {
-    providedIn: 'root',
-    factory: () => new SignInWithEmailUseCase(),
-});
+export const SIGN_IN_WITH_EMAIL_USECASE = new InjectionToken<SignInWithEmailPort>('SIGN_IN_WITH_EMAIL_USECASE');
 
 /**
  * InjectionToken for the SignInWithGooglePort use case.
  */
-export const SIGN_IN_WITH_GOOGLE_USECASE = new InjectionToken<SignInWithGooglePort>('SIGN_IN_WITH_GOOGLE_USECASE', {
-    providedIn: 'root',
-    factory: () => new SignInWithGoogleUseCase(),
-});
+export const SIGN_IN_WITH_GOOGLE_USECASE = new InjectionToken<SignInWithGooglePort>('SIGN_IN_WITH_GOOGLE_USECASE');
 
 /**
  * InjectionToken for the SignUpPort use case.
  */
-export const SIGN_UP_USECASE = new InjectionToken<SignUpPort>('SIGN_UP_USECASE', {
-    providedIn: 'root',
-    factory: () => new SignUpUseCase(),
-});
+export const SIGN_UP_USECASE = new InjectionToken<SignUpPort>('SIGN_UP_USECASE');
 
 /**
  * InjectionToken for the SignOutPort use case.
  */
-export const SIGN_OUT_USECASE = new InjectionToken<SignOutPort>('SIGN_OUT_USECASE', {
-    providedIn: 'root',
-    factory: () => new SignOutUseCase(),
-});
-
-/**
- * InjectionToken for the GetCurrentUserPort use case.
- */
-export const GET_CURRENT_USER_USECASE = new InjectionToken<GetCurrentUserPort>('GET_CURRENT_USER_USECASE', {
-    providedIn: 'root',
-    factory: () => new GetCurrentUserUseCase(),
-});
+export const SIGN_OUT_USECASE = new InjectionToken<SignOutPort>('SIGN_OUT_USECASE');
 
 /**
  * InjectionToken for the ObserveAuthStatePort use case.
  */
-export const OBSERVE_AUTH_STATE_USECASE = new InjectionToken<ObserveAuthStatePort>('OBSERVE_AUTH_STATE_USECASE', {
-    providedIn: 'root',
-    factory: () => new ObserveAuthStateUseCase(),
-});
+export const OBSERVE_AUTH_STATE_USECASE = new InjectionToken<ObserveAuthStatePort>('OBSERVE_AUTH_STATE_USECASE');
 
 // ============================================
 // Auth Providers Array
 // ============================================
 
-export const authProviders: Provider[] = [
-    // {
-    //     provide: SIGN_IN_WITH_GOOGLE_USECASE,
-    //     useFactory: () => new SignInWithGoogleUseCase(),
-    //     deps: [],
-    // },
-];
+export const provideAuth = (): EnvironmentProviders => {
+    return makeEnvironmentProviders([
+        {
+            provide: AUTH_REPOSITORY,
+            useFactory: (auth: Auth) => new FirebaseAuthRepository(auth),
+            deps: [Auth],
+        },
+        {
+            provide: SIGN_IN_WITH_GOOGLE_USECASE,
+            useFactory: (authRepository: AuthRepositoryPort) => new SignInWithGoogleUseCase(authRepository),
+            deps: [AUTH_REPOSITORY],
+        },
+        {
+            provide: SIGN_IN_WITH_EMAIL_USECASE,
+            useFactory: (authRepository: AuthRepositoryPort) => new SignInWithEmailUseCase(authRepository),
+            deps: [AUTH_REPOSITORY],
+        },
+        {
+            provide: SIGN_UP_USECASE,
+            useFactory: (authRepository: AuthRepositoryPort) => new SignUpUseCase(authRepository),
+            deps: [AUTH_REPOSITORY],
+        },
+        {
+            provide: SIGN_OUT_USECASE,
+            useFactory: (authRepository: AuthRepositoryPort) => new SignOutUseCase(authRepository),
+            deps: [AUTH_REPOSITORY],
+        },
+        {
+            provide: OBSERVE_AUTH_STATE_USECASE,
+            useFactory: (authRepository: AuthRepositoryPort) => new ObserveAuthStateUseCase(authRepository),
+            deps: [AUTH_REPOSITORY],
+        },
+    ]);
+};

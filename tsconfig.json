@@ -19,7 +19,9 @@
             "@env/*": ["./src/environments/*"],
             "@shared/*": ["./src/app/shared/*"],
             "@core/*": ["./src/app/core/*"],
-            "@features/*": ["./src/app/features/*"]
+            "@features/*": ["./src/app/features/*"],
+            "@auth/*": ["./src/app/features/auth/*"],
+            "@dashboard/*": ["./src/app/features/dashboard/*"]
         }
     },
     "angularCompilerOptions": {

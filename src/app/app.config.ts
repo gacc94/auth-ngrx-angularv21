@@ -9,7 +9,7 @@ import { authInterceptor } from '@core/interceptors/auth.interceptor';
 import { errorInterceptor } from '@core/interceptors/error.interceptor';
 import { environment } from '@env/environment';
 import { routes } from './app.routes';
-import { authProviders } from './features/auth/infrastructure/providers';
+import { provideAuth as provideAuthProviders } from './features/auth/infrastructure/providers';
 import { provideMaterial } from './shared/material/material.provide';
 
 export const appConfig: ApplicationConfig = {
@@ -21,7 +21,6 @@ export const appConfig: ApplicationConfig = {
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
         provideMaterial(),
-        // provideAuthProviders(),
-        ...authProviders,
+        provideAuthProviders(),
     ],
 };
