@@ -1,6 +1,6 @@
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAuth as provideAuthProviders } from '@auth/infrastructure/providers';
 import { provideFirebase } from '@core/config/providers/firebase.provide';
 import { authInterceptor } from '@core/interceptors/auth.interceptor';
@@ -13,8 +13,8 @@ export const appConfig: ApplicationConfig = {
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
         provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
+        provideFirebase(),
         provideMaterial(),
         provideAuthProviders(),
-        provideFirebase(),
     ],
 };

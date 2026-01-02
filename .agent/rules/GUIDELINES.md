@@ -57,3 +57,81 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Commit Message Rules (Conventional Commits + Commitlint)
+
+When generating commit messages, follow the **Conventional Commits** specification.
+
+### Format
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+### Types
+
+| Type       | Description                                             |
+| ---------- | ------------------------------------------------------- |
+| `feat`     | A new feature                                           |
+| `fix`      | A bug fix                                               |
+| `docs`     | Documentation only changes                              |
+| `style`    | Code style changes (formatting, semicolons, etc.)       |
+| `refactor` | Code change that neither fixes a bug nor adds a feature |
+| `perf`     | Performance improvements                                |
+| `test`     | Adding or correcting tests                              |
+| `build`    | Changes to build system or dependencies                 |
+| `ci`       | Changes to CI configuration                             |
+| `chore`    | Other changes that don't modify src or test files       |
+| `revert`   | Reverts a previous commit                               |
+
+### Rules
+
+1. **Subject line**:
+    - Use imperative mood: "add" not "added" or "adds"
+    - Do NOT capitalize the first letter
+    - Do NOT end with a period
+    - Maximum 15 characters (be concise and specific)
+
+2. **Scope** (optional):
+    - Use lowercase
+    - Examples: `auth`, `dashboard`, `api`, `core`, `shared`, `inactivity`
+
+3. **Body** (optional):
+    - Separate from subject with a blank line
+    - Wrap at 72 characters
+    - Explain _what_ and _why_, not _how_
+
+4. **Breaking Changes**:
+    - Add `!` after type/scope: `feat(api)!: remove deprecated endpoint`
+    - Or use `BREAKING CHANGE:` footer
+
+### Examples
+
+```
+feat(auth): add google sign-in button
+
+fix(dashboard): resolve infinite loop on logout
+
+refactor(core): extract result pattern to shared module
+
+docs: update README with installation steps
+
+chore(deps): upgrade angular to v21
+
+feat(inactivity)!: change modal timeout from 30s to 60s
+
+BREAKING CHANGE: default timeout increased
+```
+
+### Generation Instructions
+
+When generating a commit message:
+
+1. Analyze the staged/changed files to determine the correct `type`
+2. Identify the `scope` from the affected feature or module
+3. Write a concise description in imperative mood
+4. Keep it short, clear, and meaningful
