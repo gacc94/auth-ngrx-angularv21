@@ -1,9 +1,11 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MaterialModule } from '@app/shared/material/material.module';
 import { AuthStore } from '@features/auth/application/stores/auth.store';
+import { InactivityStore } from '@features/inactivity/application/stores/inactivity.store';
+import { InactivityModal } from '@features/inactivity/presentation/components/inactivity-modal/inactivity-modal';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
@@ -16,7 +18,11 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export default class Dashboard {
     readonly #breakpointObserver = inject(BreakpointObserver);
+    readonly #dialog = inject(MatDialog);
     protected readonly authStore = inject(AuthStore);
+    protected readonly inactivityStore = inject(InactivityStore);
+
+    #dialogRef: MatDialogRef<InactivityModal> | null = null;
 
     isHandset$: Observable<boolean> = this.#breakpointObserver.observe(Breakpoints.Handset).pipe(
         map((result) => result.matches),
@@ -44,7 +50,29 @@ export default class Dashboard {
         }),
     );
 
-    constructor() {}
+    constructor() {
+        // Watch for modal visibility and open/close the dialog
+        effect(() => {
+            const shouldShow = this.inactivityStore.shouldShowModal();
+            console.log('shouldShow', shouldShow);
+
+            if (shouldShow && !this.#dialogRef) {
+                this.#dialogRef = this.#dialog.open(InactivityModal, {
+                    disableClose: true,
+                    width: '400px',
+                    panelClass: 'inactivity-modal-panel',
+                });
+
+                this.#dialogRef.afterClosed().subscribe((resp) => {
+                    console.log('Modal closed', resp);
+                    this.#dialogRef = null;
+                });
+            } else if (!shouldShow && this.#dialogRef) {
+                this.#dialogRef.close();
+                this.#dialogRef = null;
+            }
+        });
+    }
 
     /**
      * Handles user logout.

@@ -5,7 +5,7 @@ import { SIGN_UP_USECASE } from '@app/features/auth/infrastructure/providers';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStoreFeature, type, withMethods } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { pipe, switchMap, tap } from 'rxjs';
+import { defer, pipe, switchMap, tap } from 'rxjs';
 import { AuthState, initialAuthState } from '../../states/auth.state';
 
 /**
@@ -36,35 +36,36 @@ export const withSignUp = () => {
                             status: 'checking',
                         });
                     }),
-                    switchMap((credentials) => {
-                        return usecase.execute(credentials);
-                    }),
-                    tapResponse({
-                        next: (result) => {
-                            if (Result.isSuccess(result)) {
-                                patchState(store, {
-                                    ...initialAuthState,
-                                    status: 'authenticated',
-                                    user: result.value.user,
-                                    token: result.value.token,
-                                });
-                            } else {
-                                patchState(store, {
-                                    ...initialAuthState,
-                                    status: 'error',
-                                    error: result.error.message,
-                                });
-                            }
-                        },
+                    switchMap((credentials) =>
+                        defer(() => usecase.execute(credentials)).pipe(
+                            tapResponse({
+                                next: (result) => {
+                                    if (Result.isSuccess(result)) {
+                                        patchState(store, {
+                                            ...initialAuthState,
+                                            status: 'authenticated',
+                                            user: result.value.user,
+                                            token: result.value.token,
+                                        });
+                                    } else {
+                                        patchState(store, {
+                                            ...initialAuthState,
+                                            status: 'error',
+                                            error: result.error.message,
+                                        });
+                                    }
+                                },
 
-                        error: (error: Error) => {
-                            patchState(store, {
-                                ...initialAuthState,
-                                status: 'error',
-                                error: error.message,
-                            });
-                        },
-                    }),
+                                error: (error: Error) => {
+                                    patchState(store, {
+                                        ...initialAuthState,
+                                        status: 'error',
+                                        error: error.message,
+                                    });
+                                },
+                            }),
+                        ),
+                    ),
                 ),
             ),
         })),

@@ -1,7 +1,7 @@
 import { withDevtools } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { signalStore, watchState, withComputed, withFeature, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { signalStore, withComputed, withFeature, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
 import { AUTH_STATE, AuthState } from '../states/auth.state';
 import {
     withAuthRedirection,
@@ -44,9 +44,18 @@ export const AuthStore = signalStore(
 
         /**
          * Whether the authentication state is being initialized.
-         * True when the app starts ('idle') or during Firebase SDK evaluation ('loading').
+         * True when the app starts ('idle') or during Firebase SDK evaluation ('checking').
          */
         isInitializing: computed(() => store.status() === 'idle' || store.status() === 'checking'),
+
+        /**
+         * Whether the authentication state is being initialized.
+         * True when the app starts ('idle') or during Firebase SDK evaluation ('checking').
+         */
+        isLoading: computed(() => {
+            const status = store.status();
+            return status === 'idle' || status === 'checking' || status === 'logging-in';
+        }),
     })),
 
     withMethods(() => ({})),
@@ -64,10 +73,10 @@ export const AuthStore = signalStore(
     withFeature(() => withSignUp()),
 
     withHooks({
-        onInit: (store) => {
-            watchState(store, ({ status }) => {
-                console.log('WatchState:', { status });
-            });
+        onInit: () => {
+            // watchState(store, ({ status }) => {
+            //     console.log('WatchState:', { status });
+            // });
         },
     }),
 );
