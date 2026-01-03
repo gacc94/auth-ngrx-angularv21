@@ -1,46 +1,84 @@
-.grid-container {
-    margin: 1.25rem;
-}
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
 
-.dashboard-card {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-}
+// ============================================================================
+// Dashboard Layout Styles
+// ============================================================================
 
-.more-button {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-}
+$sidenav-width: 16.25rem;
+$sidenav-collapsed-width: 4.5rem;
 
-.dashboard-card-content {
-    text-align: center;
-}
+.dashboard {
+    height: 100vh;
 
-.sidenav-container {
-    height: 100%;
-}
+    // When sidenav is collapsed, override the inline margin-left
+    &--collapsed {
+        .mat-sidenav-content {
+            margin-left: $sidenav-collapsed-width !important;
 
-.sidenav {
-    width: 200px;
-}
+            @media (max-width: $breakpoint-md) {
+                margin-left: 0 !important;
+            }
+        }
+    }
 
-.sidenav .mat-toolbar {
-    background: inherit;
-}
+    // Sidenav
+    &__sidenav {
+        @include flex($direction: column);
+        width: $sidenav-width;
+        background-color: $bg-primary;
+        border-right: 1px solid var(--mat-sys-outline-variant);
+        transition: width $transition-base;
+        overflow-x: hidden;
 
-.mat-toolbar.mat-primary {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
+        @media (max-width: $breakpoint-md) {
+            width: $sidenav-width;
+        }
 
-.mat-toolbar {
-    background-color: var(--mat-sys-inverse-primary);
-    span {
+        &--collapsed {
+            width: $sidenav-collapsed-width;
+        }
+    }
+
+    // Main Content Container
+    &__content {
+        @include flex($direction: column);
+        background-color: var(--mat-sys-surface-container-lowest);
+        min-height: 100vh;
+
+        @media (max-width: $breakpoint-md) {
+            margin-left: 0 !important;
+        }
+    }
+
+    // Main Content Area
+    &__main {
         flex: 1;
+        padding: $spacing-xl;
+        overflow-y: auto;
+
+        @media (max-width: $breakpoint-md) {
+            padding: $spacing-lg;
+        }
+
+        @media (max-width: $breakpoint-sm) {
+            padding: $spacing-md;
+        }
+    }
+
+    // Footer
+    &__footer {
+        @include flex($justify: center, $align: center);
+        padding: $spacing-md;
+        background-color: $bg-primary;
+        border-top: 1px solid var(--mat-sys-outline-variant);
+        color: $text-muted;
+        font-size: $font-size-sm;
+        flex-shrink: 0;
+
+        @media (max-width: $breakpoint-sm) {
+            padding: $spacing-sm;
+            font-size: $font-size-xs;
+        }
     }
 }

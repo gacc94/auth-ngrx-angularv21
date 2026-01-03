@@ -1,55 +1,38 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="dashboard" [class.dashboard--collapsed]="uiStore.isCollapsed()">
     <mat-sidenav
         #drawer
-        class="sidenav"
-        fixedInViewport
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="(isHandset$ | async) === false">
-        <mat-toolbar>Menu</mat-toolbar>
-        <mat-nav-list>
-            <a mat-list-item href="#">Link 1</a>
-            <a mat-list-item href="#">Link 2</a>
-            <a mat-list-item href="#">Link 3</a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar color="primary" class="mat-toolbar">
-            @if (isHandset$ | async) {
-                <button type="button" aria-label="Toggle sidenav" matIconButton (click)="drawer.toggle()">
-                    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-                </button>
-            }
-            <span>auth-21</span>
+        class="dashboard__sidenav"
+        [class.dashboard__sidenav--collapsed]="uiStore.isCollapsed()"
+        [mode]="uiStore.sidenavMode()"
+        [opened]="uiStore.sidenavOpened()"
+        [disableClose]="!uiStore.isMobile()">
+        <app-sidenav-brand [showLabels]="uiStore.showLabels()" />
 
-            <button matButton="filled" (click)="onLogout()">Logout</button>
-        </mat-toolbar>
-        <!-- Add Content Here -->
-        <div class="grid-container">
-            <h1 class="mat-h1">Dashboard</h1>
-            <mat-grid-list cols="2" rowHeight="350px">
-                @for (card of cards | async; track card) {
-                    <mat-grid-tile [colspan]="card.cols" [rowspan]="card.rows">
-                        <mat-card class="dashboard-card">
-                            <mat-card-header>
-                                <mat-card-title>
-                                    {{ card.title }}
-                                    <button matIconButton class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
-                                    <mat-menu #menu="matMenu" xPosition="before">
-                                        <button mat-menu-item>Expand</button>
-                                        <button mat-menu-item>Remove</button>
-                                    </mat-menu>
-                                </mat-card-title>
-                            </mat-card-header>
-                            <mat-card-content class="dashboard-card-content">
-                                <div>Card Content Here</div>
-                            </mat-card-content>
-                        </mat-card>
-                    </mat-grid-tile>
-                }
-            </mat-grid-list>
-        </div>
+        <app-sidenav-nav [navItems]="navItems" [showLabels]="uiStore.showLabels()" (itemClick)="onNavItemClick()" />
+
+        <app-sidenav-user
+            [userName]="userName()"
+            [userEmail]="userEmail()"
+            [userPhotoURL]="userPhotoURL()"
+            [showLabels]="uiStore.showLabels()"
+            (logout)="onLogout()" />
+    </mat-sidenav>
+
+    <mat-sidenav-content class="dashboard__content">
+        <app-dashboard-header
+            [title]="pageTitle()"
+            [notificationCount]="3"
+            [userName]="userName()"
+            [userPhotoURL]="userPhotoURL()"
+            (menuClick)="onMenuClick()"
+            (logout)="onLogout()" />
+
+        <main class="dashboard__main">
+            <router-outlet />
+        </main>
+
+        <!-- <footer class="dashboard__footer">
+            <span>© 2023 Dashboard App. All rights reserved.</span>
+        </footer> -->
     </mat-sidenav-content>
 </mat-sidenav-container>

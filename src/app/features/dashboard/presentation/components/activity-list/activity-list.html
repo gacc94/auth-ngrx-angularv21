@@ -1,0 +1,20 @@
+<mat-card class="activity-list">
+    <mat-card-header class="activity-list__header">
+        <mat-card-title class="activity-list__title">Recent Activity</mat-card-title>
+        <a href="#" class="activity-list__view-all">View All</a>
+    </mat-card-header>
+
+    <mat-card-content class="activity-list__content">
+        @for (activity of activities(); track activity.id) {
+            <div class="activity-list__item">
+                <div class="activity-list__icon" [style.background-color]="activity.iconColor + '20'">
+                    <mat-icon [style.color]="activity.iconColor">{{ activity.icon }}</mat-icon>
+                </div>
+                <div class="activity-list__info">
+                    <span class="activity-list__item-title">{{ activity.title }}</span>
+                    <span class="activity-list__item-desc">{{ activity.description }} • {{ activity.time }}</span>
+                </div>
+            </div>
+        }
+    </mat-card-content>
+</mat-card>

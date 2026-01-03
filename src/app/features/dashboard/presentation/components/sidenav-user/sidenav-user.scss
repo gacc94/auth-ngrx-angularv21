@@ -1,0 +1,59 @@
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+// Push component to bottom of sidenav flex container
+:host {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+}
+
+.sidenav-user {
+    @include flex($align: center, $gap: $spacing-xs);
+    padding: $spacing-sm;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    flex-shrink: 0;
+    background-color: $bg-primary;
+
+    &__avatar {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        border-radius: $radius-full;
+        object-fit: cover;
+        background-color: var(--mat-sys-surface-container-high);
+    }
+
+    &__info {
+        @include flex($direction: column);
+        overflow: hidden;
+        white-space: nowrap;
+        flex: 1; // Take available space
+        padding-left: $spacing-xs;
+    }
+
+    &__name {
+        font-size: $font-size-sm;
+        font-weight: 600;
+        color: $text-primary;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__email {
+        font-size: $font-size-xs;
+        color: $text-muted;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+// Collapsed state
+:host-context(.dashboard__sidenav--collapsed) {
+    .sidenav-user {
+        justify-content: center;
+        padding: $spacing-sm;
+    }
+}

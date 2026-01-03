@@ -1,0 +1,78 @@
+<mat-card class="revenue-chart">
+    <mat-card-header class="revenue-chart__header">
+        <div class="revenue-chart__title-section">
+            <mat-card-title class="revenue-chart__title">Revenue Overview</mat-card-title>
+            <mat-card-subtitle class="revenue-chart__subtitle">Weekly performance</mat-card-subtitle>
+        </div>
+        <button mat-icon-button aria-label="More options" [matMenuTriggerFor]="chartMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #chartMenu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>download</mat-icon>
+                <span>Export</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>refresh</mat-icon>
+                <span>Refresh</span>
+            </button>
+        </mat-menu>
+    </mat-card-header>
+
+    <mat-card-content class="revenue-chart__content">
+        <!-- Chart placeholder - SVG wave visualization -->
+        <div class="revenue-chart__chart">
+            <svg viewBox="0 0 700 300" class="revenue-chart__svg" preserveAspectRatio="none">
+                <!-- Grid lines -->
+                <g class="revenue-chart__grid">
+                    @for (i of [0, 1, 2, 3, 4]; track i) {
+                        <line
+                            [attr.x1]="0"
+                            [attr.y1]="i * 60 + 30"
+                            [attr.x2]="700"
+                            [attr.y2]="i * 60 + 30"
+                            stroke="var(--mat-sys-outline-variant)"
+                            stroke-width="1"
+                            stroke-dasharray="4" />
+                    }
+                </g>
+
+                <!-- Gradient definition -->
+                <defs>
+                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color: #3b82f6; stop-opacity: 0.3" />
+                        <stop offset="100%" style="stop-color: #3b82f6; stop-opacity: 0" />
+                    </linearGradient>
+                </defs>
+
+                <!-- Area fill -->
+                <path
+                    d="M0,200 Q50,180 100,190 T200,160 T300,130 T400,150 T500,100 T600,120 T700,140 L700,300 L0,300 Z"
+                    fill="url(#chartGradient)" />
+
+                <!-- Line -->
+                <path
+                    d="M0,200 Q50,180 100,190 T200,160 T300,130 T400,150 T500,100 T600,120 T700,140"
+                    fill="none"
+                    stroke="#3b82f6"
+                    stroke-width="3"
+                    stroke-linecap="round" />
+
+                <!-- Data point -->
+                <circle cx="500" cy="100" r="8" fill="#3b82f6" />
+                <circle cx="500" cy="100" r="4" fill="white" />
+            </svg>
+        </div>
+
+        <!-- X-axis labels -->
+        <div class="revenue-chart__labels">
+            <span>MON</span>
+            <span>TUE</span>
+            <span>WED</span>
+            <span>THU</span>
+            <span>FRI</span>
+            <span>SAT</span>
+            <span>SUN</span>
+        </div>
+    </mat-card-content>
+</mat-card>

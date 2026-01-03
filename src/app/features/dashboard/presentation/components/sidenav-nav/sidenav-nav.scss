@@ -1,0 +1,59 @@
+@use "sass:color";
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+.sidenav-nav {
+    @include flex($direction: column, $gap: $spacing-xs);
+    flex: 1;
+    padding: $spacing-md;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &__item {
+        @include flex($align: center, $gap: $spacing-md);
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius-lg;
+        color: $text-secondary;
+        text-decoration: none;
+        transition: all $transition-fast;
+        cursor: pointer;
+        white-space: nowrap;
+        min-height: 48px;
+
+        &:hover {
+            background-color: var(--mat-sys-surface-container);
+            color: $text-primary;
+        }
+
+        &--active {
+            background-color: color.adjust($primary-color, $lightness: 35%);
+            color: $primary-color;
+
+            .sidenav-nav__icon {
+                color: $primary-color;
+            }
+        }
+    }
+
+    &__icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+    }
+
+    &__label {
+        font-size: $font-size-base;
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+// Collapsed state - applied via host class
+:host-context(.dashboard__sidenav--collapsed) {
+    .sidenav-nav__item {
+        justify-content: center;
+        padding: $spacing-sm;
+    }
+}
