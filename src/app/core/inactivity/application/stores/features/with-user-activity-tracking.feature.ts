@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { effect, inject, untracked } from '@angular/core';
-import { AuthStore } from '@features/auth/application/stores/auth.store';
+import { AuthStore } from '@app/core/auth/application/stores/auth.store';
 import { patchState, signalStoreFeature, type, withHooks, withMethods } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { debounceTime, fromEvent, merge, Observable, pipe, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';

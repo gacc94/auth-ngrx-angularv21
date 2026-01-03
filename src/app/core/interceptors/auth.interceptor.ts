@@ -1,6 +1,6 @@
 import { type HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthStore } from '@features/auth/application/stores/auth.store';
+import { AuthStore } from '@auth/application/stores/auth.store';
 
 /**
  * Functional HTTP interceptor that adds authentication token to requests.

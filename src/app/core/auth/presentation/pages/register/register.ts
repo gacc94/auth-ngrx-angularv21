@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthStore } from '@app/core/auth/application/stores/auth.store';
 import { MaterialModule } from '@app/shared/material/material.module';
-import { AuthStore } from '@features/auth/application/stores/auth.store';
 
 /**
  * Registration page component.

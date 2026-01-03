@@ -2,10 +2,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MaterialModule } from '@app/shared/material/material.module';
-import { AuthStore } from '@features/auth/application/stores/auth.store';
-import { InactivityStore } from '@features/inactivity/application/stores/inactivity.store';
-import { InactivityModal } from '@features/inactivity/presentation/components/inactivity-modal/inactivity-modal';
+import { AuthStore } from '@auth/application/stores/auth.store';
+import { InactivityStore } from '@inactivity/application/stores/inactivity.store';
+import { InactivityModal } from '@inactivity/presentation/components/inactivity-modal/inactivity-modal';
+import { MaterialModule } from '@shared/material/material.module';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 

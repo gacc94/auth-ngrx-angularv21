@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
+import { RegisterCredentials } from '@app/core/auth/domain/models/credentials.model';
+import { SIGN_UP_USECASE } from '@app/core/auth/infrastructure/providers';
 import { Result } from '@app/core/config/result/result.namespace';
-import { RegisterCredentials } from '@app/features/auth/domain/models/credentials.model';
-import { SIGN_UP_USECASE } from '@app/features/auth/infrastructure/providers';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStoreFeature, type, withMethods } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthStore } from '@app/features/auth/application/stores/auth.store';
+import { AuthStore } from '@app/core/auth/application/stores/auth.store';
 import { MaterialModule } from '@app/shared/material/material.module';
 
 /**

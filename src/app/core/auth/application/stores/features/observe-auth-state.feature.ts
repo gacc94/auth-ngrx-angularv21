@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
+import { OBSERVE_AUTH_STATE_USECASE } from '@app/core/auth/infrastructure/providers';
 import { Result } from '@app/core/config/result/result.namespace';
-import { OBSERVE_AUTH_STATE_USECASE } from '@auth/infrastructure/providers';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStoreFeature, type, withHooks, withMethods } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';

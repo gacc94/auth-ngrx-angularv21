@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
+import { SIGN_IN_WITH_GOOGLE_USECASE } from '@app/core/auth/infrastructure/providers';
 import { Result } from '@app/core/config/result';
-import { SIGN_IN_WITH_GOOGLE_USECASE } from '@app/features/auth/infrastructure/providers';
 import { tapResponse } from '@ngrx/operators';
 import { patchState, signalStoreFeature, type, withMethods } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';

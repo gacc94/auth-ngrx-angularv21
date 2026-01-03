@@ -1,6 +1,6 @@
-import type { AuthException } from '@auth/domain/exceptions/auth.exceptions';
-import type { SignOutPort } from '@auth/domain/ports/in/sign-out.in';
-import type { AuthRepositoryPort } from '@auth/domain/ports/out/auth-repository.out';
+import type { AuthException } from '@app/core/auth/domain/exceptions/auth.exceptions';
+import type { SignOutPort } from '@app/core/auth/domain/ports/in/sign-out.in';
+import type { AuthRepositoryPort } from '@app/core/auth/domain/ports/out/auth-repository.out';
 import type { ResultType } from '@core/config/result';
 
 /**

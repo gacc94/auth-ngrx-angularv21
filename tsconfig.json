@@ -20,7 +20,8 @@
             "@shared/*": ["./src/app/shared/*"],
             "@core/*": ["./src/app/core/*"],
             "@features/*": ["./src/app/features/*"],
-            "@auth/*": ["./src/app/features/auth/*"],
+            "@auth/*": ["./src/app/core/auth/*"],
+            "@inactivity/*": ["./src/app/core/inactivity/*"],
             "@dashboard/*": ["./src/app/features/dashboard/*"]
         }
     },

@@ -6,10 +6,16 @@ import {
     SignInWithGoogleUseCase,
     SignOutUseCase,
     SignUpUseCase,
-} from '@auth/application/usecases';
-import type { ObserveAuthStatePort, SignInWithEmailPort, SignInWithGooglePort, SignOutPort, SignUpPort } from '@auth/domain/ports/in';
-import type { AuthRepositoryPort } from '@auth/domain/ports/out/auth-repository.out';
-import { FirebaseAuthRepository } from '@auth/infrastructure/repositories/firebase-auth.repository';
+} from '@app/core/auth/application/usecases';
+import type {
+    ObserveAuthStatePort,
+    SignInWithEmailPort,
+    SignInWithGooglePort,
+    SignOutPort,
+    SignUpPort,
+} from '@app/core/auth/domain/ports/in';
+import type { AuthRepositoryPort } from '@app/core/auth/domain/ports/out/auth-repository.out';
+import { FirebaseAuthRepository } from '@app/core/auth/infrastructure/repositories/firebase-auth.repository';
 
 // ============================================
 // Output Port Token (Repository)

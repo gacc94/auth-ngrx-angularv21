@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Router, type CanActivateFn } from '@angular/router';
-import { AuthStore } from '@features/auth/application/stores/auth.store';
+import { AuthStore } from '@app/core/auth/application/stores/auth.store';
 
 /**
  * Functional guard that protects private routes.

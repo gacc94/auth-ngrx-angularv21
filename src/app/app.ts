@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthStore } from './features/auth/application/stores/auth.store';
+import { AuthStore } from './core/auth/application/stores/auth.store';
 import { GlobalLoading } from './shared/components/global-loading/global-loading';
 
 @Component({
