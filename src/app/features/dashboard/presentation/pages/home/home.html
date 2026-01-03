@@ -1,0 +1,50 @@
+<div class="home">
+    <!-- Welcome Section -->
+    <section class="home__welcome">
+        <div class="home__welcome-text">
+            <h1 class="home__greeting">Welcome back, {{ userName() }}</h1>
+            <p class="home__subtext">Here's what's happening with your projects today.</p>
+        </div>
+        <div class="home__actions">
+            <button mat-stroked-button class="home__action-btn">
+                <mat-icon>download</mat-icon>
+                Export
+            </button>
+            <button mat-flat-button color="primary" class="home__action-btn home__action-btn--primary">
+                <mat-icon>add</mat-icon>
+                New Project
+            </button>
+        </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="home__stats">
+        @for (card of statCards(); track card.title) {
+            <app-stat-card
+                [title]="card.title"
+                [value]="card.value"
+                [change]="card.change"
+                [changeType]="card.changeType"
+                [icon]="card.icon"
+                [iconBgColor]="card.iconBgColor" />
+        }
+    </section>
+
+    <!-- Main Content Grid -->
+    <section class="home__grid">
+        <!-- Revenue Chart -->
+        <div class="home__chart-container">
+            <app-revenue-chart />
+        </div>
+
+        <!-- Activity List -->
+        <div class="home__activity-container">
+            <app-activity-list [activities]="activityItems()" />
+        </div>
+    </section>
+
+    <!-- Upgrade Banner -->
+    <section class="home__banner">
+        <app-upgrade-banner />
+    </section>
+</div>

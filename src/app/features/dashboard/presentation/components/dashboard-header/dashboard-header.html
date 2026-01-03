@@ -1,0 +1,73 @@
+<mat-toolbar class="dashboard-header" [class.dashboard-header--search-expanded]="isSearchExpanded()">
+    <!-- Mobile Search Expanded View -->
+    @if (isSearchExpanded()) {
+        <div class="dashboard-header__search-mobile">
+            <button
+                type="button"
+                mat-icon-button
+                class="dashboard-header__search-back"
+                (click)="closeMobileSearch()"
+                aria-label="Close search">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <input type="text" class="dashboard-header__search-input-mobile" placeholder="Search..." autofocus />
+        </div>
+    } @else {
+        <!-- Normal Header Content -->
+        <button type="button" mat-icon-button class="dashboard-header__toggle-btn" (click)="menuClick.emit()" aria-label="Toggle sidebar">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <span class="dashboard-header__title">{{ title() }}</span>
+
+        <span class="dashboard-header__spacer"></span>
+
+        <!-- Desktop Search -->
+        <div class="dashboard-header__search">
+            <mat-icon class="dashboard-header__search-icon">search</mat-icon>
+            <input type="text" class="dashboard-header__search-input" placeholder="Search..." />
+        </div>
+
+        <!-- Mobile Search Button -->
+        <button
+            type="button"
+            mat-icon-button
+            class="dashboard-header__search-btn-mobile"
+            (click)="toggleMobileSearch()"
+            aria-label="Search">
+            <mat-icon>search</mat-icon>
+        </button>
+
+        <button
+            type="button"
+            mat-icon-button
+            class="dashboard-header__notification-btn"
+            aria-label="Notifications"
+            [matBadge]="notificationCount()"
+            [matBadgeHidden]="notificationCount() === 0"
+            matBadgeColor="warn"
+            matBadgeSize="small">
+            <mat-icon>notifications</mat-icon>
+        </button>
+
+        <button type="button" mat-icon-button [matMenuTriggerFor]="userMenu" class="dashboard-header__avatar-btn" aria-label="User menu">
+            <img class="dashboard-header__avatar" [src]="userPhotoURL() | avatar" [alt]="userName() + ' avatar'" />
+        </button>
+
+        <mat-menu #userMenu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>person</mat-icon>
+                <span>Profile</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>settings</mat-icon>
+                <span>Settings</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout.emit()">
+                <mat-icon>logout</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+    }
+</mat-toolbar>

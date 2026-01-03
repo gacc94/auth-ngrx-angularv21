@@ -1,0 +1,80 @@
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+.activity-list {
+    height: 100%;
+    border-radius: $radius-xl !important;
+    box-shadow: $shadow-sm !important;
+    border: 1px solid var(--mat-sys-outline-variant);
+
+    &__header {
+        @include flex($justify: space-between, $align: center);
+        padding: $spacing-lg;
+        padding-bottom: 0;
+    }
+
+    &__title {
+        font-family: $font-family-heading;
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
+    }
+
+    &__view-all {
+        font-size: $font-size-sm;
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__content {
+        @include flex($direction: column, $gap: $spacing-md);
+        padding: $spacing-lg !important;
+    }
+
+    &__item {
+        @include flex($align: center, $gap: $spacing-md);
+        padding: $spacing-sm 0;
+    }
+
+    &__icon {
+        @include flex($justify: center, $align: center);
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-full;
+        flex-shrink: 0;
+
+        mat-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__info {
+        @include flex($direction: column, $gap: 2px);
+        min-width: 0;
+    }
+
+    &__item-title {
+        font-size: $font-size-sm;
+        font-weight: 600;
+        color: $text-primary;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__item-desc {
+        font-size: $font-size-xs;
+        color: $text-muted;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

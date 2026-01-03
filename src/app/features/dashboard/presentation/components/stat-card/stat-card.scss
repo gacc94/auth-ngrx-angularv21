@@ -1,0 +1,90 @@
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+.stat-card {
+    height: 100%;
+    border-radius: $radius-xl !important;
+    box-shadow: $shadow-sm !important;
+    border: 1px solid var(--mat-sys-outline-variant);
+    transition: all $transition-fast;
+
+    &:hover {
+        box-shadow: $shadow-md !important;
+        transform: translateY(-2px);
+    }
+
+    &__content {
+        @include flex($direction: column, $gap: $spacing-md);
+        padding: $spacing-lg !important;
+        height: 100%;
+    }
+
+    &__info {
+        @include flex($justify: space-between, $align: flex-start);
+    }
+
+    &__icon {
+        @include flex($justify: center, $align: center);
+        width: 48px;
+        height: 48px;
+        border-radius: $radius-lg;
+
+        mat-icon {
+            color: white;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    &__icon-bg {
+        @include flex($justify: center, $align: center);
+        width: 40px;
+        height: 40px;
+        background-color: var(--mat-sys-surface-container);
+        border-radius: $radius-md;
+        opacity: 0.5;
+
+        mat-icon {
+            color: $text-muted;
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__text {
+        @include flex($justify: space-between, $align: flex-start, $flex: 1);
+        margin-left: $spacing-md;
+    }
+
+    &__title {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        font-weight: 500;
+    }
+
+    &__value-section {
+        @include flex($direction: column, $gap: $spacing-xs);
+    }
+
+    &__value {
+        font-family: $font-family-heading;
+        font-size: $font-size-3xl;
+        font-weight: 700;
+        color: $text-primary;
+    }
+
+    &__change {
+        font-size: $font-size-sm;
+        font-weight: 500;
+
+        &--positive {
+            color: $success-color;
+        }
+
+        &--negative {
+            color: $error-color;
+        }
+    }
+}

@@ -1,0 +1,54 @@
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+.settings {
+    @include flex($direction: column, $gap: $spacing-xl);
+
+    &__header {
+        @include flex($direction: column, $gap: $spacing-xs);
+    }
+
+    &__title {
+        font-family: $font-family-heading;
+        font-size: $font-size-3xl;
+        font-weight: 700;
+        color: $text-primary;
+        margin: 0;
+    }
+
+    &__description {
+        font-size: $font-size-base;
+        color: $text-secondary;
+        margin: 0;
+    }
+
+    &__content {
+        flex: 1;
+    }
+
+    &__placeholder {
+        @include flex($direction: column, $justify: center, $align: center);
+        min-height: 400px;
+        border-radius: $radius-xl !important;
+        text-align: center;
+
+        h2 {
+            font-family: $font-family-heading;
+            margin: $spacing-md 0 $spacing-xs;
+            color: $text-primary;
+        }
+
+        p {
+            color: $text-secondary;
+            margin: 0;
+        }
+    }
+
+    &__icon {
+        font-size: 64px;
+        width: 64px;
+        height: 64px;
+        color: $primary-color;
+        opacity: 0.5;
+    }
+}

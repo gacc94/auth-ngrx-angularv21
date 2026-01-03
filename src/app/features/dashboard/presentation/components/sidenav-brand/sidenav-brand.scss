@@ -1,0 +1,45 @@
+@use "sass:color";
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+.sidenav-brand {
+    @include flex($align: center, $gap: $spacing-md);
+    padding: $spacing-lg;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    min-height: 72px;
+    flex-shrink: 0;
+
+    &__logo {
+        @include flex($justify: center, $align: center);
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background: linear-gradient(135deg, $primary-color, color.adjust($primary-color, $lightness: -15%));
+        border-radius: $radius-md;
+    }
+
+    &__icon {
+        color: white;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+    }
+
+    &__text {
+        @include flex($direction: column);
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &__name {
+        font-family: $font-family-heading;
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $text-primary;
+    }
+
+    &__version {
+        font-size: $font-size-xs;
+        color: $text-muted;
+    }
+}

@@ -1,0 +1,52 @@
+@use "sass:color";
+@use "abstract/variables" as *;
+@use "abstract/mixins" as *;
+
+.upgrade-banner {
+    @include flex($align: center, $gap: $spacing-lg);
+    padding: $spacing-lg $spacing-xl;
+    background-color: var(--mat-sys-surface-container);
+    border-radius: $radius-xl;
+    border: 1px solid var(--mat-sys-outline-variant);
+
+    &__icon {
+        @include flex($justify: center, $align: center);
+        width: 56px;
+        height: 56px;
+        background: linear-gradient(135deg, $primary-color, color.adjust($primary-color, $lightness: -15%));
+        border-radius: $radius-lg;
+        flex-shrink: 0;
+
+        mat-icon {
+            color: white;
+            font-size: 28px;
+            width: 28px;
+            height: 28px;
+        }
+    }
+
+    &__content {
+        @include flex($direction: column, $gap: $spacing-xs, $flex: 1);
+    }
+
+    &__title {
+        font-family: $font-family-heading;
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: $text-primary;
+        margin: 0;
+    }
+
+    &__description {
+        font-size: $font-size-sm;
+        color: $text-secondary;
+        margin: 0;
+    }
+
+    &__button {
+        background: linear-gradient(135deg, $primary-color, color.adjust($primary-color, $lightness: -10%)) !important;
+        font-weight: 500;
+        padding: $spacing-sm $spacing-xl !important;
+        border-radius: $radius-lg !important;
+    }
+}
