@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@app/shared/material/material.imports';
 
 @Component({
     selector: 'app-projects',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule],
+    imports: [...MATERIAL_IMPORTS],
     template: `
         <div class="projects">
             <header class="projects__header">

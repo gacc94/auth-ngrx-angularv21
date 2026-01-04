@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 
 @Component({
     selector: 'app-stat-card',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule],
+    imports: [...MATERIAL_IMPORTS],
     template: `
         <mat-card class="stat-card">
             <mat-card-content class="stat-card__content">

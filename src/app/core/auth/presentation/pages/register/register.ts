@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@app/core/auth/application/stores/auth.store';
-import { MaterialModule } from '@app/shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@app/shared/material/material.imports';
 
 /**
  * Registration page component.
@@ -11,7 +11,7 @@ import { MaterialModule } from '@app/shared/material/material.module';
 @Component({
     selector: 'app-register',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ReactiveFormsModule, MaterialModule, RouterLink],
+    imports: [ReactiveFormsModule, ...MATERIAL_IMPORTS, RouterLink],
     templateUrl: './register.html',
     styleUrl: './register.scss',
 })

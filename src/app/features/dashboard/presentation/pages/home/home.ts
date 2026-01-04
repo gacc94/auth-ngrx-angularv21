@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { AuthStore } from '@auth/application/stores/auth.store';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 import { ActivityListComponent } from '../../components/activity-list/activity-list';
 import { RevenueChartComponent } from '../../components/revenue-chart/revenue-chart';
 import { StatCardComponent } from '../../components/stat-card/stat-card';
@@ -29,7 +29,7 @@ export interface ActivityItem {
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './home.html',
     styleUrl: './home.scss',
-    imports: [MaterialModule, StatCardComponent, ActivityListComponent, RevenueChartComponent, UpgradeBannerComponent],
+    imports: [...MATERIAL_IMPORTS, StatCardComponent, ActivityListComponent, RevenueChartComponent, UpgradeBannerComponent],
 })
 export default class Home {
     protected readonly authStore = inject(AuthStore);

@@ -5,12 +5,9 @@ import { Router, RouterOutlet } from '@angular/router';
 import { AuthStore } from '@auth/application/stores/auth.store';
 import { InactivityStore } from '@inactivity/application/stores/inactivity.store';
 import { InactivityModal } from '@inactivity/presentation/components/inactivity-modal/inactivity-modal';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 import { DashboardUIStore } from '../../../application/stores/dashboard-ui.store';
-import { DashboardHeader } from '../../components/dashboard-header/dashboard-header';
-import { SidenavBrand } from '../../components/sidenav-brand/sidenav-brand';
-import { SidenavNav } from '../../components/sidenav-nav/sidenav-nav';
-import { SidenavUser } from '../../components/sidenav-user/sidenav-user';
+import { DashboardHeader, SidenavBrand, SidenavNav, SidenavUser } from '../../components';
 import { NavItem } from '../../interfaces';
 
 /**
@@ -22,7 +19,7 @@ import { NavItem } from '../../interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './dashboard.html',
     styleUrl: './dashboard.scss',
-    imports: [RouterOutlet, MaterialModule, SidenavBrand, SidenavNav, SidenavUser, DashboardHeader],
+    imports: [RouterOutlet, ...MATERIAL_IMPORTS, SidenavBrand, SidenavNav, SidenavUser, DashboardHeader],
 })
 export default class Dashboard {
     readonly #router = inject(Router);

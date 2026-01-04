@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 
 /**
  * Presentational component for sidenav brand section.
@@ -8,7 +8,7 @@ import { MaterialModule } from '@shared/material/material.module';
 @Component({
     selector: 'app-sidenav-brand',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule],
+    imports: [...MATERIAL_IMPORTS],
     template: `
         <div class="sidenav-brand">
             <div class="sidenav-brand__logo">

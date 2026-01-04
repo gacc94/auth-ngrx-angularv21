@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 
 export interface ActivityItem {
     readonly id: number;
@@ -13,7 +13,7 @@ export interface ActivityItem {
 @Component({
     selector: 'app-activity-list',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule],
+    imports: [...MATERIAL_IMPORTS],
     templateUrl: './activity-list.html',
     styleUrl: './activity-list.scss',
 })
