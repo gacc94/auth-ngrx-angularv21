@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 import { NavItem } from '../../interfaces';
 
 /**
@@ -10,7 +10,7 @@ import { NavItem } from '../../interfaces';
 @Component({
     selector: 'app-sidenav-nav',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [RouterLink, RouterLinkActive, MaterialModule],
+    imports: [RouterLink, RouterLinkActive, ...MATERIAL_IMPORTS],
     template: `
         <nav class="sidenav-nav">
             @for (item of navItems(); track item.route) {

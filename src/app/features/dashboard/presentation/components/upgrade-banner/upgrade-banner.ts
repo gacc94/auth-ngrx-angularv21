@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 
 @Component({
     selector: 'app-upgrade-banner',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule],
+    imports: [...MATERIAL_IMPORTS],
     template: `
         <div class="upgrade-banner">
             <div class="upgrade-banner__icon">

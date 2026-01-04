@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '@app/core/auth/application/stores/auth.store';
-import { MaterialModule } from '@app/shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@app/shared/material/material.imports';
 
 /**
  * Sign-in page component.
@@ -11,7 +11,7 @@ import { MaterialModule } from '@app/shared/material/material.module';
 @Component({
     selector: 'app-sign-in',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ReactiveFormsModule, MaterialModule, RouterLink],
+    imports: [ReactiveFormsModule, ...MATERIAL_IMPORTS, RouterLink],
     templateUrl: './sign-in.html',
     styleUrl: './sign-in.scss',
 })

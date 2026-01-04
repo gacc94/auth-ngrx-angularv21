@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 
 @Component({
     selector: 'app-analytics',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule],
+    imports: [...MATERIAL_IMPORTS],
     template: `
         <div class="analytics">
             <header class="analytics__header">

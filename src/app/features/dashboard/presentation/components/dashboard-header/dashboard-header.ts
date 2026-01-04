@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
-import { MaterialModule } from '@shared/material/material.module';
+import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
 import { AvatarPipe } from '@shared/pipes';
 
 /**
@@ -9,7 +9,7 @@ import { AvatarPipe } from '@shared/pipes';
 @Component({
     selector: 'app-dashboard-header',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MaterialModule, AvatarPipe],
+    imports: [...MATERIAL_IMPORTS, AvatarPipe],
     templateUrl: './dashboard-header.html',
     styleUrl: './dashboard-header.scss',
 })
