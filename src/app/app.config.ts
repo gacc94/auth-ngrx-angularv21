@@ -5,6 +5,7 @@ import { provideAuth as provideAuthProviders } from '@app/core/auth/infrastructu
 import { provideFirebase } from '@core/config/providers/firebase.provide';
 import { authInterceptor } from '@core/interceptors/auth.interceptor';
 import { errorInterceptor } from '@core/interceptors/error.interceptor';
+import { provideVoiceAssistant } from '@core/voice-assistant/infrastructure/providers';
 import { provideMaterial } from '@shared/material/material.provide';
 import { routes } from './app.routes';
 
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes, withViewTransitions(), withComponentInputBinding()),
         provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
         provideFirebase(),
+        provideVoiceAssistant(),
         provideMaterial(),
         provideAuthProviders(),
     ],

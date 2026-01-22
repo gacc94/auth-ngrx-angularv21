@@ -15,7 +15,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
         <div class="global-loading" [class.global-loading--hidden]="!$isLoading()">
             <div class="global-loading__brand">
                 <div class="global-loading__logo">
-                    <mat-icon>security</mat-icon>
+                    <mat-icon fontIcon="security"/>
                 </div>
                 <h1 class="global-loading__title">Auth App</h1>
             </div>

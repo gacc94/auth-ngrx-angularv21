@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, effect, inject, ViewChild
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, RouterOutlet } from '@angular/router';
+import { VoiceAssistantFabComponent } from '@app/features/voice-assistant/presentation/components/voice-assistant-fab/voice-assistant-fab';
 import { AuthStore } from '@auth/application/stores/auth.store';
+import { DashboardUIStore } from '@dashboard/application/stores/dashboard-ui.store';
+import { DashboardHeader, SidenavBrand, SidenavNav, SidenavUser } from '@dashboard/presentation/components';
+import { NavItem } from '@dashboard/presentation/interfaces';
 import { InactivityStore } from '@inactivity/application/stores/inactivity.store';
 import { InactivityModal } from '@inactivity/presentation/components/inactivity-modal/inactivity-modal';
 import { MATERIAL_IMPORTS } from '@shared/material/material.imports';
-import { DashboardUIStore } from '../../../application/stores/dashboard-ui.store';
-import { DashboardHeader, SidenavBrand, SidenavNav, SidenavUser } from '../../components';
-import { NavItem } from '../../interfaces';
 
 /**
  * Container component for the main dashboard layout.
@@ -19,7 +20,7 @@ import { NavItem } from '../../interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './dashboard.html',
     styleUrl: './dashboard.scss',
-    imports: [RouterOutlet, ...MATERIAL_IMPORTS, SidenavBrand, SidenavNav, SidenavUser, DashboardHeader],
+    imports: [RouterOutlet, ...MATERIAL_IMPORTS, SidenavBrand, SidenavNav, SidenavUser, DashboardHeader, VoiceAssistantFabComponent],
 })
 export default class Dashboard {
     readonly #router = inject(Router);

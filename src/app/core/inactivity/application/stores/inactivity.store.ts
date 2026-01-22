@@ -47,25 +47,30 @@ export const InactivityStore = signalStore(
     withHooks({
         onInit: (store) => {
             // Watch for modal visibility changes and start countdown when modal is shown
-            effect(() => {
-                const isVisible = store.isModalVisible();
-                console.log('isVisible', isVisible);
-                if (isVisible) {
-                    store.startCountdown();
-                } else {
-                    store.stopCountdown();
-                }
-            });
+            effect(
+                () => {
+                    const isVisible = store.isModalVisible();
+                    isVisible ? store.startCountdown() : store.stopCountdown();
+                },
+                {
+                    // manualCleanup: true,
+                },
+            );
 
             // Watch for countdown expiration
-            effect(() => {
-                const isExpired = store.isCountdownExpired();
-                const isModalVisible = store.isModalVisible();
-                console.log('isExpired', isExpired);
-                if (isExpired && isModalVisible) {
-                    store.onTimeoutExpired();
-                }
-            });
+            effect(
+                () => {
+                    const isExpired = store.isCountdownExpired();
+                    const isModalVisible = store.isModalVisible();
+                    console.log('isExpired', isExpired);
+                    if (isExpired && isModalVisible) {
+                        store.onTimeoutExpired();
+                    }
+                },
+                {
+                    // manualCleanup: true,
+                },
+            );
 
             // Debug logging
             watchState(store, ({ isModalVisible, countdownSeconds, isTracking }) => {
