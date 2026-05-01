@@ -31,8 +31,6 @@ export default class Register {
     protected hidePassword = true;
     protected hideConfirmPassword = true;
 
-    constructor() {}
-
     /**
      * Handles form submission.
      */

@@ -2,15 +2,15 @@
  * Enum representing the possible tags for a Result type.
  * Used as a discriminant in the Result discriminated union.
  */
-export type ResultTag = 'success' | 'failure';
+export type ResultTag = "success" | "failure";
 
 /**
  * Represents a successful result containing a value.
  * @template TValue - The type of the success value.
  */
 export type Success<TValue> = {
-    readonly _tag: 'success';
-    readonly value: TValue;
+	readonly _tag: "success";
+	readonly value: TValue;
 };
 
 /**
@@ -18,8 +18,8 @@ export type Success<TValue> = {
  * @template TError - The type of the error.
  */
 export type Failure<TError> = {
-    readonly _tag: 'failure';
-    readonly error: TError;
+	readonly _tag: "failure";
+	readonly error: TError;
 };
 
 /**

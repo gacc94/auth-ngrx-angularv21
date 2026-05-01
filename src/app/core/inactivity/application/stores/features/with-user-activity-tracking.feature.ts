@@ -1,10 +1,30 @@
-import { DOCUMENT } from '@angular/common';
-import { effect, inject, untracked } from '@angular/core';
-import { AuthStore } from '@app/core/auth/application/stores/auth.store';
-import { patchState, signalStoreFeature, type, withHooks, withMethods } from '@ngrx/signals';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, fromEvent, merge, Observable, pipe, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
-import { InactivityState, initialInactivityState } from '../../states/inactivity.state';
+import { DOCUMENT } from "@angular/common";
+import { effect, inject, untracked } from "@angular/core";
+import { AuthStore } from "@app/core/auth/application/stores/auth.store";
+import {
+	patchState,
+	signalStoreFeature,
+	type,
+	withHooks,
+	withMethods,
+} from "@ngrx/signals";
+import { rxMethod } from "@ngrx/signals/rxjs-interop";
+import {
+	debounceTime,
+	fromEvent,
+	merge,
+	type Observable,
+	pipe,
+	Subject,
+	switchMap,
+	takeUntil,
+	tap,
+	timer,
+} from "rxjs";
+import {
+	type InactivityState,
+	initialInactivityState,
+} from "../../states/inactivity.state";
 
 // ============================================================================
 // CONSTANTS
@@ -26,7 +46,14 @@ const ACTIVITY_DEBOUNCE_MS = 300;
  * User activity event types to monitor.
  * These events indicate that the user is actively using the application.
  */
-const ACTIVITY_EVENTS = ['mousemove', 'click', 'keypress', 'keydown', 'touchstart', 'scroll'] as const;
+const ACTIVITY_EVENTS = [
+	"mousemove",
+	"click",
+	"keypress",
+	"keydown",
+	"touchstart",
+	"scroll",
+] as const;
 
 // ============================================================================
 // TYPES
@@ -45,8 +72,10 @@ type ActivityEvent = (typeof ACTIVITY_EVENTS)[number];
  * @returns An observable that emits whenever user activity is detected.
  */
 const createActivityStream = (document: Document): Observable<Event> => {
-    const eventStreams = ACTIVITY_EVENTS.map((eventType: ActivityEvent) => fromEvent(document, eventType));
-    return merge(...eventStreams);
+	const eventStreams = ACTIVITY_EVENTS.map((eventType: ActivityEvent) =>
+		fromEvent(document, eventType),
+	);
+	return merge(...eventStreams);
 };
 
 /**
@@ -59,11 +88,15 @@ const createActivityStream = (document: Document): Observable<Event> => {
  * @returns An observable representing the timeout pipeline.
  */
 const createInactivityTimer = (
-    stopSignal$: Subject<void>,
-    activityStream$: Observable<Event>,
-    onTimeout: () => void,
+	stopSignal$: Subject<void>,
+	activityStream$: Observable<Event>,
+	onTimeout: () => void,
 ): Observable<number> => {
-    return timer(INACTIVITY_TIMEOUT_MS).pipe(takeUntil(stopSignal$), takeUntil(activityStream$), tap(onTimeout));
+	return timer(INACTIVITY_TIMEOUT_MS).pipe(
+		takeUntil(stopSignal$),
+		takeUntil(activityStream$),
+		tap(onTimeout),
+	);
 };
 
 /**
@@ -75,16 +108,16 @@ const createInactivityTimer = (
  * @returns An observable representing the activity tracking pipeline.
  */
 const createActivityTrackingPipeline = (
-    stopSignal$: Subject<void>,
-    activityStream$: Observable<Event>,
-    onTimeout: () => void,
+	stopSignal$: Subject<void>,
+	activityStream$: Observable<Event>,
+	onTimeout: () => void,
 ): Observable<number> => {
-    return activityStream$.pipe(
-        debounceTime(ACTIVITY_DEBOUNCE_MS),
-        switchMap(() => timer(INACTIVITY_TIMEOUT_MS)),
-        takeUntil(stopSignal$),
-        tap(onTimeout),
-    );
+	return activityStream$.pipe(
+		debounceTime(ACTIVITY_DEBOUNCE_MS),
+		switchMap(() => timer(INACTIVITY_TIMEOUT_MS)),
+		takeUntil(stopSignal$),
+		tap(onTimeout),
+	);
 };
 
 // ============================================================================
@@ -107,133 +140,141 @@ const createActivityTrackingPipeline = (
  * @returns A SignalStoreFeature for user activity tracking.
  */
 export const withUserActivityTracking = () => {
-    return signalStoreFeature(
-        { state: type<InactivityState>() },
+	return signalStoreFeature(
+		{ state: type<InactivityState>() },
 
-        withMethods((store, document = inject(DOCUMENT)) => {
-            const stopTracking$ = new Subject<void>();
-            const activityStream$ = createActivityStream(document);
+		withMethods((store, document = inject(DOCUMENT)) => {
+			const stopTracking$ = new Subject<void>();
+			const activityStream$ = createActivityStream(document);
 
-            /**
-             * Handler for inactivity timeout.
-             * Shows the modal if tracking is active and modal is not already visible.
-             */
-            const handleInactivityTimeout = (): void => {
-                const isCurrentlyTracking = store.isTracking();
-                const isModalAlreadyVisible = store.isModalVisible();
+			/**
+			 * Handler for inactivity timeout.
+			 * Shows the modal if tracking is active and modal is not already visible.
+			 */
+			const handleInactivityTimeout = (): void => {
+				const isCurrentlyTracking = store.isTracking();
+				const isModalAlreadyVisible = store.isModalVisible();
 
-                if (isCurrentlyTracking && !isModalAlreadyVisible) {
-                    patchState(store, { isModalVisible: true });
-                }
-            };
+				if (isCurrentlyTracking && !isModalAlreadyVisible) {
+					patchState(store, { isModalVisible: true });
+				}
+			};
 
-            /**
-             * Creates the combined tracking observables (initial timer + activity-based timer).
-             */
-            const createTrackingObservables = (): Observable<number> => {
-                const initialTimer$ = createInactivityTimer(stopTracking$, activityStream$, handleInactivityTimeout);
-                const activityTracking$ = createActivityTrackingPipeline(stopTracking$, activityStream$, handleInactivityTimeout);
+			/**
+			 * Creates the combined tracking observables (initial timer + activity-based timer).
+			 */
+			const createTrackingObservables = (): Observable<number> => {
+				const initialTimer$ = createInactivityTimer(
+					stopTracking$,
+					activityStream$,
+					handleInactivityTimeout,
+				);
+				const activityTracking$ = createActivityTrackingPipeline(
+					stopTracking$,
+					activityStream$,
+					handleInactivityTimeout,
+				);
 
-                return merge(initialTimer$, activityTracking$);
-            };
+				return merge(initialTimer$, activityTracking$);
+			};
 
-            return {
-                /**
-                 * Starts monitoring user activity.
-                 * Sets up timers that will trigger the inactivity modal after the timeout period.
-                 */
-                startActivityTracking: rxMethod<void>(
-                    pipe(
-                        tap(() => patchState(store, { isTracking: true })),
-                        switchMap(() => createTrackingObservables()),
-                    ),
-                ),
+			return {
+				/**
+				 * Starts monitoring user activity.
+				 * Sets up timers that will trigger the inactivity modal after the timeout period.
+				 */
+				startActivityTracking: rxMethod<void>(
+					pipe(
+						tap(() => patchState(store, { isTracking: true })),
+						switchMap(() => createTrackingObservables()),
+					),
+				),
 
-                /**
-                 * Stops all activity monitoring.
-                 * Resets tracking state and hides the modal.
-                 */
-                stopActivityTracking: (): void => {
-                    stopTracking$.next();
-                    patchState(store, { isTracking: false, isModalVisible: false });
-                },
+				/**
+				 * Stops all activity monitoring.
+				 * Resets tracking state and hides the modal.
+				 */
+				stopActivityTracking: (): void => {
+					stopTracking$.next();
+					patchState(store, { isTracking: false, isModalVisible: false });
+				},
 
-                /**
-                 * Resets the tracking cycle.
-                 * Used when user chooses to stay logged in from the inactivity modal.
-                 */
-                resetActivityTracking: rxMethod<void>(
-                    pipe(
-                        tap(() => {
-                            stopTracking$.next();
-                            patchState(store, { isModalVisible: false, isTracking: true });
-                        }),
-                        switchMap(() => createTrackingObservables()),
-                    ),
-                ),
-            };
-        }),
+				/**
+				 * Resets the tracking cycle.
+				 * Used when user chooses to stay logged in from the inactivity modal.
+				 */
+				resetActivityTracking: rxMethod<void>(
+					pipe(
+						tap(() => {
+							stopTracking$.next();
+							patchState(store, { isModalVisible: false, isTracking: true });
+						}),
+						switchMap(() => createTrackingObservables()),
+					),
+				),
+			};
+		}),
 
-        withHooks((store, authStore = inject(AuthStore)) => {
-            let previousAuthState = false;
-            let isFirstRun = true;
+		withHooks((store, authStore = inject(AuthStore)) => {
+			let previousAuthState = false;
+			let isFirstRun = true;
 
-            /**
-             * Handles authentication state changes.
-             * Starts tracking when user authenticates, stops when user signs out.
-             */
-            const handleAuthStateChange = (isAuthenticated: boolean): void => {
-                if (isFirstRun) {
-                    handleInitialAuthState(isAuthenticated);
-                    isFirstRun = false;
-                    return;
-                }
+			/**
+			 * Handles authentication state changes.
+			 * Starts tracking when user authenticates, stops when user signs out.
+			 */
+			const handleAuthStateChange = (isAuthenticated: boolean): void => {
+				if (isFirstRun) {
+					handleInitialAuthState(isAuthenticated);
+					isFirstRun = false;
+					return;
+				}
 
-                if (isAuthenticated && !previousAuthState) {
-                    onUserAuthenticated();
-                } else if (!isAuthenticated && previousAuthState) {
-                    onUserSignedOut();
-                }
+				if (isAuthenticated && !previousAuthState) {
+					onUserAuthenticated();
+				} else if (!isAuthenticated && previousAuthState) {
+					onUserSignedOut();
+				}
 
-                previousAuthState = isAuthenticated;
-            };
+				previousAuthState = isAuthenticated;
+			};
 
-            /**
-             * Handles initial authentication state on store initialization.
-             */
-            const handleInitialAuthState = (isAuthenticated: boolean): void => {
-                if (isAuthenticated) {
-                    store.startActivityTracking();
-                }
-                previousAuthState = isAuthenticated;
-            };
+			/**
+			 * Handles initial authentication state on store initialization.
+			 */
+			const handleInitialAuthState = (isAuthenticated: boolean): void => {
+				if (isAuthenticated) {
+					store.startActivityTracking();
+				}
+				previousAuthState = isAuthenticated;
+			};
 
-            /**
-             * Called when user becomes authenticated.
-             */
-            const onUserAuthenticated = (): void => {
-                store.startActivityTracking();
-            };
+			/**
+			 * Called when user becomes authenticated.
+			 */
+			const onUserAuthenticated = (): void => {
+				store.startActivityTracking();
+			};
 
-            /**
-             * Called when user signs out.
-             */
-            const onUserSignedOut = (): void => {
-                store.stopActivityTracking();
-                patchState(store, { ...initialInactivityState });
-            };
+			/**
+			 * Called when user signs out.
+			 */
+			const onUserSignedOut = (): void => {
+				store.stopActivityTracking();
+				patchState(store, { ...initialInactivityState });
+			};
 
-            return {
-                onInit: () => {
-                    effect(() => {
-                        const isAuthenticated = authStore.isAuthenticated();
-                        untracked(() => handleAuthStateChange(isAuthenticated));
-                    });
-                },
-                onDestroy: () => {
-                    store.stopActivityTracking();
-                },
-            };
-        }),
-    );
+			return {
+				onInit: () => {
+					effect(() => {
+						const isAuthenticated = authStore.isAuthenticated();
+						untracked(() => handleAuthStateChange(isAuthenticated));
+					});
+				},
+				onDestroy: () => {
+					store.stopActivityTracking();
+				},
+			};
+		}),
+	);
 };

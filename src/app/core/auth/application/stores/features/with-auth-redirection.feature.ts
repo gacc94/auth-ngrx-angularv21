@@ -1,7 +1,7 @@
-import { effect, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { getState, signalStoreFeature, type, withHooks } from '@ngrx/signals';
-import { AuthState } from '../../states/auth.state';
+import { effect, inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { getState, signalStoreFeature, type, withHooks } from "@ngrx/signals";
+import type { AuthState } from "../../states/auth.state";
 
 /**
  * A SignalStore feature that provides automatic redirection based on the authentication status.
@@ -21,26 +21,38 @@ import { AuthState } from '../../states/auth.state';
  * ```
  */
 export const withAuthRedirection = () => {
-    return signalStoreFeature(
-        { state: type<AuthState>() },
+	return signalStoreFeature(
+		{ state: type<AuthState>() },
 
-        withHooks((store, router = inject(Router)) => ({
-            /**
-             * Initializes the redirection logic by setting up an effect that reacts to state changes.
-             */
-            onInit: () => {
-                effect(() => {
-                    const state = getState(store);
-                    const { status } = state;
+		withHooks((store, router = inject(Router)) => ({
+			/**
+			 * Initializes the redirection logic by setting up an effect that reacts to state changes.
+			 */
+			onInit: () => {
+				effect(
+					(_cleanup) => {
+						const state = getState(store);
+						const { status } = state;
 
-                    if (status === 'idle' || status === 'checking' || status === 'logging-in') {
-                        return;
-                    }
+						if (
+							status === "IDLE" ||
+							status === "CHECKING" ||
+							status === "LOGGING_IN"
+						) {
+							return;
+						}
 
-                    const route = status === 'authenticated' ? '/dashboard' : '/auth';
-                    router.navigate([route]);
-                });
-            },
-        })),
-    );
+						const route = status === "AUTHENTICATED" ? "/dashboard" : "/auth";
+						_cleanup(() => {
+							router.navigate([route]);
+						});
+					},
+					{
+						allowSignalWrites: true,
+						manualCleanup: true,
+					},
+				);
+			},
+		})),
+	);
 };

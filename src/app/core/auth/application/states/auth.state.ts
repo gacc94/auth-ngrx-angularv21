@@ -1,6 +1,15 @@
-import { InjectionToken } from '@angular/core';
-import { Token } from '../../domain/entities/token.entity';
-import { User } from '../../domain/entities/user.entity';
+import { InjectionToken } from "@angular/core";
+import type { Token } from "../../domain/entities/token.entity";
+import type { User } from "../../domain/entities/user.entity";
+
+enum AuthStatusEnum {
+	IDLE = "idle",
+	CHECKING = "checking",
+	LOGGING_IN = "logging-in",
+	AUTHENTICATED = "authenticated",
+	UNAUTHENTICATED = "unauthenticated",
+	ERROR = "error",
+}
 
 /**
  * Represents the possible states of the authentication process.
@@ -13,12 +22,12 @@ import { User } from '../../domain/entities/user.entity';
  * - `error`: An error occurred during the last authentication attempt.
  */
 export type AuthStatus =
-    | 'idle' // Nothing has happened
-    | 'checking' // Verifying session at startup (Splash screen)
-    | 'logging-in' // Login request in progress (Spinner on button)
-    | 'authenticated' // User is authenticated
-    | 'unauthenticated' // User is not authenticated
-    | 'error'; // An error occurred
+	| AuthStatusEnum.IDLE // Nothing has happened
+	| AuthStatusEnum.CHECKING // Verifying session at startup (Splash screen)
+	| AuthStatusEnum.LOGGING_IN // Login request in progress (Spinner on button)
+	| AuthStatusEnum.AUTHENTICATED // User is authenticated
+	| AuthStatusEnum.UNAUTHENTICATED // User is not authenticated
+	| AuthStatusEnum.ERROR; // An error occurred
 
 /**
  * Represents the authentication state of the application.
@@ -27,29 +36,29 @@ export type AuthStatus =
  * including the current user, their access token, and the current status of the auth process.
  */
 export interface AuthState {
-    /**
-     * The currently authenticated user.
-     * Is `null` if the user is not logged in.
-     */
-    user: User | null;
+	/**
+	 * The currently authenticated user.
+	 * Is `null` if the user is not logged in.
+	 */
+	user: User | null;
 
-    /**
-     * The authentication token for the current session.
-     * Is `null` if no token is available or the user is not logged in.
-     */
-    token: Token | null;
+	/**
+	 * The authentication token for the current session.
+	 * Is `null` if no token is available or the user is not logged in.
+	 */
+	token: Token | null;
 
-    /**
-     * A descriptive error message if an authentication operation (like login or logout) failed.
-     * Is `null` if the last operation was successful or no operation has been performed.
-     */
-    error: string | null;
+	/**
+	 * A descriptive error message if an authentication operation (like login or logout) failed.
+	 * Is `null` if the last operation was successful or no operation has been performed.
+	 */
+	error: string | null;
 
-    /**
-     * The current status of the authentication process.
-     * @see {@link AuthStatus}
-     */
-    status: AuthStatus;
+	/**
+	 * The current status of the authentication process.
+	 * @see {@link AuthStatus}
+	 */
+	status: keyof typeof AuthStatusEnum;
 }
 
 /**
@@ -58,10 +67,10 @@ export interface AuthState {
  * This constant defines the default values for the authentication state when the application starts.
  */
 export const initialAuthState: AuthState = {
-    user: null,
-    token: null,
-    error: null,
-    status: 'idle',
+	user: null,
+	token: null,
+	error: null,
+	status: "IDLE",
 };
 
 /**
@@ -70,6 +79,6 @@ export const initialAuthState: AuthState = {
  * This token can be used to inject the initial state into components or services.
  * It defaults to the {@link initialAuthState}.
  */
-export const AUTH_STATE = new InjectionToken<AuthState>('AUTH_STATE', {
-    factory: () => initialAuthState,
+export const AUTH_STATE = new InjectionToken<AuthState>("AUTH_STATE", {
+	factory: () => initialAuthState,
 });

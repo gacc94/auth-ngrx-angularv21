@@ -19,5 +19,5 @@
  * });
  * ```
  */
-export { Result } from './result.namespace';
-export type { Failure, Result as ResultType, Success } from './result.types';
+export { Result } from "./result.namespace";
+export type { Failure, Result as ResultType, Success } from "./result.types";

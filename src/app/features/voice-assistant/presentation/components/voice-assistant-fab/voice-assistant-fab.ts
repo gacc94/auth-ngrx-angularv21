@@ -1,4 +1,4 @@
-import { Component, inject, provideAppInitializer, provideEnvironmentInitializer, providePlatformInitializer } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,11 +20,8 @@ export class VoiceAssistantFabComponent {
 
     openAssistant() {
         this.dialog.open(VoiceAssistantDialogComponent, {
-            width: '400px',
+            width: '600px',
             panelClass: 'voice-assistant-panel',
         });
     }
 }
-provideEnvironmentInitializer;
-provideAppInitializer;
-providePlatformInitializer;
